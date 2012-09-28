@@ -1,0 +1,5 @@
+INDEX VERSION 1.126+C:\Users\Phil\Documents\GitHub\Monkoid-GCA3\.metadata\.plugins\org.eclipse.jdt.core
+2598267404.index
+3789534478.index
+1987855317.index
+3866843224.index
