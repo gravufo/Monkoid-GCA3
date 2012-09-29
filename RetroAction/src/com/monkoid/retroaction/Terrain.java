@@ -40,7 +40,7 @@ public class Terrain implements Drawable {
 		for( int i = 0 ; i < blockCountX; i++)
 		{	
 			for( int j = 0; j < blockCountY; j++ )
-				GameGrid[i][j] = new Bloc(i, j, BlockType.PLATEFORME);
+				GameGrid[i][j] = new Bloc(i, j, BlockType.PLATEFORME, block_width);
 		}
 
 		Vector3 center = GetGridCenter();
