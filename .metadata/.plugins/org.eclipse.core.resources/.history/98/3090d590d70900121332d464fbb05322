@@ -1,5 +1,10 @@
 package com.monkoid.retroaction;
 
+import java.util.ArrayList;
+
+import com.monkoid.retroaction.R;
+import com.monkoid.retroaction.R.drawable;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -7,10 +12,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.Window;
 
 public class View extends SurfaceView implements SurfaceHolder.Callback{
 

@@ -1,6 +1,7 @@
 package com.monkoid.retroaction;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.SurfaceHolder;
 
 public class MainThread extends Thread{
