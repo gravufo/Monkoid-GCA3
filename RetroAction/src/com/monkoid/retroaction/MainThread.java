@@ -50,9 +50,7 @@ public class MainThread extends Thread{
 	        			// if(this.view_.t != null)
 	        			//	 this.view_.t.onUpdate();
 	        			 lastTimeUpdateBlocs_ = new_time;
-	        		 
-	        		 
-	        		 
+	        		 		 
 	        		 /*if((new_time - lastTimeCreatBloc_) > 1000){
 	        			 int col =  Math.abs(randomizer.nextInt()%6);
 	 					 this.view_.treeRender.add(new Bloc(0, col, BlockType.GREF));
