@@ -73,10 +73,10 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	private void initTreeRender(){
 		switch(this.screenDensity_){
 	     case DisplayMetrics.DENSITY_LOW:
-	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 64, 64);
+	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 16, 16);
 	     break;
 	     case DisplayMetrics.DENSITY_MEDIUM:
-	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 64, 64);
+	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 32, 32);
 	      break;
 	     case DisplayMetrics.DENSITY_HIGH:
 	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 64, 64);

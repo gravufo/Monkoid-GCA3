@@ -109,7 +109,7 @@ public class Bloc implements Drawable {
 		this.type = type;
 		switch(this.type){
 		case INVISIBLE : 
-			this.image = BitmapLibrary.getGreen().BlocblueBmp_;
+			this.image = BitmapLibrary.getGreen().BlocInvisibleBmp_;
 			break;
 		case GREF :
 			this.image = BitmapLibrary.getGreen().BlocgreenBmp_;
