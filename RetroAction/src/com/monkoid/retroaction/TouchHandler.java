@@ -14,7 +14,9 @@ public class TouchHandler
 			finalX = 0,
 			finalY = 0,
 			deltaX = 0,
-			deltaY = 0;
+			deltaY = 0,
+			deltaBlockX = 0,
+			deltaBlockY = 0;
 	private boolean axisY = false,
 			axisX = true;
 	private Platform platform;
@@ -51,8 +53,11 @@ public class TouchHandler
 			deltaX = finalX - initialX;
 			deltaY = finalY - initialY;
 			
-			initialX = finalX;
-			initialY = finalY;
+			deltaBlockX = deltaX;
+			deltaBlockY = deltaY;
+			
+			//initialX = finalX;
+			//initialY = finalY;
 			
 			if(Math.abs(platform.getX() + platform.getY()) <= 10)
 			{
@@ -70,12 +75,24 @@ public class TouchHandler
 					if(deltaX > 0)
 					{
 						// platform.moveRight();
-						platform.moveX(deltaX);
+						// platform.moveX(deltaX);
+						
+						if(deltaBlockX > 30)
+						{
+							platform.moveX(60);
+							initialX += 30;
+						}
 					}
 					else
 					{
 						// platform.moveLeft();
-						platform.moveX(deltaX);
+						// platform.moveX(deltaX);
+						
+						if(deltaBlockX < -30)
+						{
+							platform.moveX(-60);
+							initialX -= 30;
+						}
 					}
 				}
 				else
@@ -85,12 +102,24 @@ public class TouchHandler
 					if(deltaY > 0)
 					{
 						// platform.moveDown();
-						platform.moveY(deltaY);
+						// platform.moveY(deltaY);
+						
+						if(deltaBlockY > 30)
+						{
+							platform.moveY(60);
+							initialY += 30;
+						}
 					}
 					else
 					{
 						// platform.moveUp();
-						platform.moveY(deltaY);
+						// platform.moveY(deltaY);
+						
+						if(deltaBlockY < -30)
+						{
+							platform.moveY(-60);
+							initialY -= 30;
+						}
 					}
 				}
 			}
@@ -101,14 +130,25 @@ public class TouchHandler
 					// send a LEFT movement
 					// platform.moveLeft();
 
-					platform.moveX(deltaX);
+					// platform.moveX(deltaX);
+					
+					if(deltaBlockX < -30)
+					{
+						platform.moveX(-60);
+						 initialX -= 30;
+					}
 				}
 				else if(deltaX > 0 && axisX)
 				{
 					// send a RIGHT movement
 					// platform.moveRight();
 
-					platform.moveX(deltaX);
+					// platform.moveX(deltaX);
+					if(deltaBlockX < 30)
+					{
+						platform.moveX(60);
+						initialX += 30;
+					}
 				}
 				
 				if(deltaY < 0 && axisY)
@@ -116,14 +156,24 @@ public class TouchHandler
 					// send an UP movement
 					// platform.moveUp();
 					
-					platform.moveY(deltaY);
+					// platform.moveY(deltaY);
+					if(deltaBlockY < -30)
+					{
+						platform.moveY(-60);
+						initialY -= 30;
+					}
 				}
 				else if(deltaY > 0 && axisY)
 				{
 					// send a DOWN movement
 					// platform.moveDown();
 
-					platform.moveY(deltaY);
+					// platform.moveY(deltaY);
+					if(deltaBlockY < 30)
+					{
+						platform.moveY(60);
+						initialY += 30;
+					}
 				}
 			}
 			break;

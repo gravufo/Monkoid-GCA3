@@ -62,7 +62,6 @@ public class BitmapLibrary {
 		Blocyellow16_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.yellow16);
 		Blocred16_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.red16);
 		BlocInvisible16_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.empty16);
-		PlatformBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.new_game_btn_img);
-		
+		PlatformBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.center16);
 	}
 }
