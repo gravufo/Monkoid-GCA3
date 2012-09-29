@@ -9,8 +9,11 @@ import android.graphics.Color;
 import com.monkoid.retroaction.Drawable;
 
 public class Bloc implements Drawable {
+	
+	enum DIRECTIONS { HAUT, BAS, GAUCHE, DROITE }
+	
 	int couleur;
-	int direction;
+	DIRECTIONS direction;
 	Vector3 position;
 	Bitmap image;
 	int size = 0;
@@ -18,7 +21,7 @@ public class Bloc implements Drawable {
 	enum BlockType { INVISIBLE, PLATEFORME, GREF, RACINE}
 	public BlockType type;
 
-	public Bloc(int couleur, int direction, Vector3 position) {
+	public Bloc(int couleur, DIRECTIONS direction, Vector3 position) {
 		this.couleur = couleur;
 		this.direction = direction;
 		this.position = position;
@@ -29,7 +32,7 @@ public class Bloc implements Drawable {
 		this.size = size;
 		this.setType(type);
 		this.position = new Vector3(i,j);
-		this.direction = 0;
+		this.direction = DIRECTIONS.BAS;
 		////////TEST///////////
 		//Random generateur = new Random();
 		//this.couleur =  Math.abs(generateur.nextInt()%4);
