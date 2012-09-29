@@ -76,6 +76,25 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	
 	private void initTreeRender(){
 		this.treeRender.add(new Kangoo());
+		terrain t = new terrain();
+		t.genererCube();
+		t.genererCube();
+		t.genererCube();
+		t.genererCube();
+		t.genererCube();
+		t.genererCube();
+		t.genererCube();
+		t.genererCube();
+		
+		t.genererCube();
+		t.genererCube();
+		t.genererCube();
+		t.genererCube();
+		t.genererCube();
+		
+		
+		this.treeRender.add(t);
+		
 	}
 	
 	public void surfaceDestroyed(SurfaceHolder holder) {
