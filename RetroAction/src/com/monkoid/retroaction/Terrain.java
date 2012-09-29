@@ -6,6 +6,7 @@ import java.util.Random;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.monkoid.retroaction.Bloc;
 import com.monkoid.retroaction.Bloc.BlockType;
@@ -101,9 +102,12 @@ public class Terrain implements Drawable {
 
 	public void parcourirGrille( Vector3 origin, boolean newToggleCheckValue, Vector3 whereFrom  ){
 
-		if(origin.x > (GameGrid.length-1) || origin.y > (GameGrid[0].length-1) || origin.x < 0 || origin.y < 0)
-			return;
 		
+		if(origin.x > (GameGrid.length-1) || origin.y > (GameGrid[0].length-1) || origin.x < 0 || origin.y < 0){
+			Log.d("Parcourir", "STOP x:"+origin.x+" "+"y:"+origin.y);
+			return;
+		}
+		Log.d("Parcourir", "x:"+origin.x+" "+"y:"+origin.y);
 		Bloc currentBlock = GameGrid[origin.x][origin.y];
 
 		// Stopping condition
@@ -118,9 +122,8 @@ public class Terrain implements Drawable {
 
 		int state = 0;
 
-		while (state <= 1){
+		while (state <= 3){
 			Vector3 delta = null;
-
 			switch( state ){
 			// Right
 			case 0: 
@@ -138,17 +141,17 @@ public class Terrain implements Drawable {
 			case 3:  
 				delta = new Vector3(0, -1);
 			break;
-			}
+		}
+			Vector3 nextPos = new Vector3(origin.x + delta.x, origin.y + delta.y);
 
-			Vector3 nextPos = origin.Add(delta);
 			//if( !delta.HasVisited(whereFrom) ){
 			parcourirGrille(nextPos, newToggleCheckValue, delta);
 			//}
-			
+			currentBlock.couleur = COLORS.BLUE;
 			state++;
 		}
 
-		currentBlock.couleur = COLORS.BLUE;
+		
 
 		//		// Check all directions, recursively, for the current block
 		//		for( int i = 0; i < 2; i++ ){

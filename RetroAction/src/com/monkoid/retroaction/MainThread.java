@@ -50,7 +50,6 @@ public class MainThread extends Thread{
 	        			// if(this.view_.t != null)
 	        			//	 this.view_.t.onUpdate();
 	        			 lastTimeUpdateBlocs_ = new_time;
-	        			 Log.d("MainThread", "UpdateBlocs");
 	        		 
 	        		 
 	        		 
