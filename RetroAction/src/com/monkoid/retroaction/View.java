@@ -1,10 +1,5 @@
 package com.monkoid.retroaction;
 
-import java.util.ArrayList;
-
-import com.monkoid.retroaction.R;
-import com.monkoid.retroaction.R.drawable;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -18,7 +13,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.Window;
 
 public class View extends SurfaceView implements SurfaceHolder.Callback{
 
@@ -27,7 +21,8 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	
 	private float m_ScaleWidth = 480;			// Facteur de grossissement selon la taille de l'écran
 	private float m_ScaleHeight = 640;		// Facteur de grossissement selon la taille de l'écran
-	
+	private Platform platform;
+	private TouchHandler touchHandler;
 	private Paint textPaint;
 	private TreeRender treeRender;
 	
@@ -40,13 +35,13 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	      setFocusable(true);
 	      Log.d("view", "Constructor");
 	      mainThread_ = new MainThread(this.getHolder(), this);
-
 	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		Log.d("View", "onDraw");
 		if(canvas != null){
+			canvas.drawColor(Color.BLACK);
 			treeRender.draw(canvas);
 
 		}
@@ -57,6 +52,7 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
+		touchHandler.handleEvent(event);
 		return true;
 	}
 
@@ -76,6 +72,7 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	
 	private void initTreeRender(){
 		this.treeRender.add(new Kangoo());
+
 		terrain t = new terrain();
 		t.genererCube();
 		t.genererCube();
@@ -94,7 +91,9 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 		
 		
 		this.treeRender.add(t);
-		
+
+		this.treeRender.add(platform = new Platform(100,100));
+	    touchHandler = new TouchHandler(platform);
 	}
 	
 	public void surfaceDestroyed(SurfaceHolder holder) {

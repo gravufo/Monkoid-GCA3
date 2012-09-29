@@ -1,0 +1,29 @@
+package com.monkoid.retroaction;
+
+public class Platform
+{
+	int x,
+		y;
+	
+	public Platform(int x, int y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+	
+	public void move(int x, int y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+	
+	public void moveDown()
+	{
+		
+	}
+	
+	public void moveUp()
+	{
+		
+	}
+}
