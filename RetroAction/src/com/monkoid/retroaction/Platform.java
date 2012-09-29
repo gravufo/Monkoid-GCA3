@@ -14,7 +14,7 @@ public class Platform implements Drawable
 	{
 		this.x = x;
 		this.y = y;
-		bmp_ = BitmapLibrary.getGreen().KangooBmp_;
+		bmp_ = BitmapLibrary.getGreen().PlatformBmp_;
 	}
 	
 	public int getX()
@@ -31,26 +31,6 @@ public class Platform implements Drawable
 	{
 		this.x = x;
 		this.y = y;
-	}
-	
-	public void moveDown()
-	{
-		this.y += 5;
-	}
-	
-	public void moveUp()
-	{
-		this.y -= 5;
-	}
-	
-	public void moveLeft()
-	{
-		this.x -= 5;
-	}
-	
-	public void moveRight()
-	{
-		this.x += 5;
 	}
 	
 	public void moveX(int x)

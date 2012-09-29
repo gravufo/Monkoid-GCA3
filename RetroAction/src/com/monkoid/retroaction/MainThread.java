@@ -36,9 +36,11 @@ public class MainThread extends Thread{
 	        {
 	        	c = this.surfaceHolder_.lockCanvas(null);
 	        	long new_time = System.currentTimeMillis();
+
 	        	 synchronized(this.surfaceHolder_) 
 	              {
 	        		 if((new_time - lastTimeDraw_) > 10){
+
 
 	        			 this.view_.onDraw(c);
 	        			 lastTimeDraw_ = new_time;
@@ -56,6 +58,7 @@ public class MainThread extends Thread{
 	        			this.view_.t.genererCube();
 	 					Log.d("MainThread", "BlocGenerator");
 	 					lastTimeCreatBloc_ =  new_time;
+
 	        		 }
 	        		 
 	              }
