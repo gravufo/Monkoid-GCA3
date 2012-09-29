@@ -79,8 +79,10 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 32, 32);
 	      break;
 	     case DisplayMetrics.DENSITY_HIGH:
+	     default:
 	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 64, 64);
 	      break;
+	      
 	}
 		//t.parcourirGrille(t.GetGridCenter(), true, new Vector3(0,0) );
 		this.treeRender.add(t);
