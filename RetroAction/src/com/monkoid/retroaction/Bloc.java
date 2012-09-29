@@ -10,7 +10,7 @@ import com.monkoid.retroaction.Drawable;
 
 public class Bloc implements Drawable {
 
-	enum DIRECTIONS { HAUT, BAS, GAUCHE, DROITE }
+	enum DIRECTIONS { HAUT, BAS, GAUCHE, DROITE, AUCUNE }
 	enum COLORS {RED, YELLOW, BLUE, GREEN, PURPLE}
 
 	public boolean checkValue;
@@ -18,7 +18,9 @@ public class Bloc implements Drawable {
 	COLORS couleur;
 	DIRECTIONS direction;
 	Vector3 position;
+	boolean updated;
 	Bitmap image;
+	
 	int size = 0;
 
 	public boolean toggleCheckValue = false;
@@ -30,6 +32,7 @@ public class Bloc implements Drawable {
 		this.couleur = couleur;
 		this.direction = direction;
 		this.position = position;
+		this.updated = false;
 		this.type = BlockType.GREF;
 	}
 
@@ -39,7 +42,10 @@ public class Bloc implements Drawable {
 		this.position = new Vector3(i,j);
 		this.direction = DIRECTIONS.BAS;
 		this.toggleCheckValue = false;
-		ChooseRandomColorForCurrentBlock();
+		this.couleur = COLORS.GREEN;
+		//ChooseRandomColorForCurrentBlock();
+
+		this.updated = false;
 		////////TEST///////////
 		//Random generateur = new Random();
 		//this.couleur =  Math.abs(generateur.nextInt()%4);

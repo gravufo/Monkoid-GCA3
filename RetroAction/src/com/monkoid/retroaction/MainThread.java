@@ -34,35 +34,30 @@ public class MainThread extends Thread{
         while(Curly){
 	        try 
 	        {
-	        	c = this.surfaceHolder_.lockCanvas();
+	        	c = this.surfaceHolder_.lockCanvas(null);
 	        	long new_time = System.currentTimeMillis();
 	        	 synchronized(this.surfaceHolder_) 
 	              {
-	        		 if((new_time - lastTimeDraw_) > 33){
+	        		 if((new_time - lastTimeDraw_) > 10){
 	        			 this.view_.onDraw(c);
 	        			 lastTimeDraw_ = new_time;
 	        			 Log.d("MainThread", "Draw");
 	        		 }
-	        		 ////Test
-	        		 if(!update){
-	        			 this.view_.t.onUpdate();
-	        			 update = true;
-	        		 }
-	        		 /*if((new_time - lastTimeUpdateBlocs_) > 500){
+	        		
+	        		 if((new_time - lastTimeUpdateBlocs_) >500){
 	        			 if(this.view_.t != null)
 	        				 this.view_.t.onUpdate();
 	        			 lastTimeUpdateBlocs_ = new_time;
 	        			 Log.d("MainThread", "UpdateBlocs");
-	        		 }*/
-	        		 
-	        		 
-	        		 /*if((new_time - lastTimeCreatBloc_) > 1000){
-	        			 int col =  Math.abs(randomizer.nextInt()%6);
-	 					 this.view_.treeRender.add(new Bloc(0, col, BlockType.GREF));
-	 					lastTimeCreatBloc_ = new_time;
-	 					 Log.d("MainThread", "BlocGenerator");
 	        		 }
-	        		 */
+	        		 
+	        		 
+	        		 if((new_time - lastTimeCreatBloc_) > 500){
+	        			this.view_.t.genererCube();
+	 					Log.d("MainThread", "BlocGenerator");
+	 					lastTimeCreatBloc_ =  new_time;
+	        		 }
+	        		 
 	              }
 	        }
 	        finally 

@@ -64,11 +64,11 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 		// TODO Auto-generated method stub
 		BitmapLibrary.getGreen().init(this.getContext());
 		this.treeRender = new TreeRender();
-		this.mainThread_.start();
 		this.screenWidth_ = this.getWidth();
 		this.screenHeight_ = this.getHeight();
 		this.screenDensity_ = this.getContext().getResources().getDisplayMetrics().densityDpi;
 		this.initTreeRender();
+		this.mainThread_.start();
 	}
 	
 	private void initTreeRender(){
@@ -80,6 +80,7 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 64, 64);
 	      break;
 	     case DisplayMetrics.DENSITY_HIGH:
+	     default:
 	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 64, 64);
 	      break;
 	}
