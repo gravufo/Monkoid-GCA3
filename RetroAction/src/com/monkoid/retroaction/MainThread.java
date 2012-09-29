@@ -8,6 +8,7 @@ public class MainThread extends Thread{
 
 	private SurfaceHolder surfaceHolder_;
 	private View view_;
+	private long lastTime_ = 0;
 	
 	public MainThread(SurfaceHolder surfaceHolder, View view)
 	{
@@ -23,11 +24,12 @@ public class MainThread extends Thread{
 	        try 
 	        {
 	        	c = this.surfaceHolder_.lockCanvas();
+	        	long new_time = System.currentTimeMillis();
 	        	 synchronized (this.surfaceHolder_) 
 	              {
-	        		 this.view_.onDraw(c);
+	        		 if((new_time - lastTime_) > 33)
+	        			 this.view_.onDraw(c);
 	              }
-	             
 	        }
 	        finally 
 	        {

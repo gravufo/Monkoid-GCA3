@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -27,6 +28,9 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	private float m_ScaleWidth = 480;			// Facteur de grossissement selon la taille de l'écran
 	private float m_ScaleHeight = 640;		// Facteur de grossissement selon la taille de l'écran
 	
+	private Paint textPaint;
+	private TreeRender treeRender;
+	
 	public View(Context context,Activity _act, Resources _res) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -41,15 +45,11 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	@Override
 	protected void onDraw(Canvas canvas) {
 		Log.d("View", "onDraw");
-		if(canvas != null)
-		{
-			Bitmap kangoo = BitmapFactory.decodeResource(getResources(),
-                    R.drawable.kangoo);
-			canvas.drawColor(Color.BLACK);
-			canvas.drawBitmap(kangoo, 10, 10, null);
+		if(canvas != null){
+			treeRender.draw(canvas);
 		}
-			
 	}
+	
 	protected void update(){
 		
 	}
@@ -66,9 +66,16 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
+		BitmapLibrary.getGreen().init(this.getContext());
+		this.treeRender = new TreeRender();
+		this.initTreeRender();
 		this.mainThread_.start();
 	}
-
+	
+	private void initTreeRender(){
+		this.treeRender.add(new Kangoo());
+	}
+	
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
 		
