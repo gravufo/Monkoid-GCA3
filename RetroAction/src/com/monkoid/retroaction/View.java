@@ -16,8 +16,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class View extends SurfaceView implements SurfaceHolder.Callback{
-
-
 	private MainThread mainThread_;
 	private float screenWidth_ = 0;		
 	private float screenHeight_ = 0;		
@@ -85,7 +83,8 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	}
 //		t.genererCube();
 //		t.genererCube();
-	
+		
+		t.parcourirGrille(t.GetGridCenter(), true, new Vector3(0,0) );
 		this.treeRender.add(t);
 		this.treeRender.add(platform = new Platform(0,0));
 		touchHandler = new TouchHandler(platform);

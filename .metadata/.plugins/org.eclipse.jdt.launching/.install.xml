@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
+<<<<<<< HEAD
 <entry loc="C:\Users\Phil\Downloads\eclipse" stamp="1348872333129"/>
 <entry loc="C:\Program Files\Java\jre7" stamp="1348239651106"/>
+=======
+<entry loc="C:\Users\Phil\Downloads\eclipse" stamp="1348931857929"/>
+<entry loc="C:\Program Files\Java\jre7" stamp="1332095096767"/>
+>>>>>>> d22cbead29da0fc550396b9c1a992d6b80396396
 </dirs>
