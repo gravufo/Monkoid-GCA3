@@ -8,12 +8,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-<<<<<<< HEAD
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-=======
-import android.os.Bundle;
->>>>>>> a35e5c968769d83680408f98d6d85b68da159581
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -23,17 +19,11 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 
 
 	private MainThread mainThread_;
-	
-<<<<<<< HEAD
 	private float screenWidth_ = 0;		
 	private float screenHeight_ = 0;		
 	private int screenDensity_ = 0;
-=======
-	private float m_ScaleWidth = 480;			// Facteur de grossissement selon la taille de l'écran
-	private float m_ScaleHeight = 640;		// Facteur de grossissement selon la taille de l'écran
 	private Platform platform;
 	private TouchHandler touchHandler;
->>>>>>> a35e5c968769d83680408f98d6d85b68da159581
 	private Paint textPaint;
 	private TreeRender treeRender;
 	

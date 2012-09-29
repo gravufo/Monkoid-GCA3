@@ -18,9 +18,11 @@ public class Terrain implements Drawable {
 	LinkedList<Bloc> list_blocs_libres;
 	LinkedList<Bloc> list_blocs_attaches;
 
-
 	Random generateur;
 	
+	public Terrain(float screen_width, float screen_height, int width_block, int height_block){
+		
+	}
 	public Terrain(int tailleX, int tailleY, int tailleAirDeJeu,
 			LinkedList<Bloc> list_blocs_libres,LinkedList<Bloc> list_blocs_attaches) {
 		super();
