@@ -150,30 +150,6 @@ public class Terrain implements Drawable {
 			currentBlock.couleur = COLORS.BLUE;
 			state++;
 		}
-
-		
-
-		//		// Check all directions, recursively, for the current block
-		//		for( int i = 0; i < 2; i++ ){
-		//			for( int j = 0; j < 2; j++){
-		//				
-		//				int signe =	(int)Math.pow(-1, i);
-		//				
-		//				int dx= signe * j;
-		//				int dy= signe * ((j+1) %2);
-		//				
-		//				Vector3 delta = new Vector3(dx, dy);
-		//				Vector3 nextPos = origin.Add(delta);
-		//				System.out.print(delta.x + " " + delta.y);
-		//				
-		//				if( nextPos.x >= 0 &&  nextPos.x < blockCountX && nextPos.y >= 0 &&  nextPos.y < blockCountY)
-		//					parcourirGrille( nextPos, newToggleCheckValue);
-		//			}
-		//		}
-
-		// TRAITEMEN SPÉCIFIQUE
-		//ex:
-
 	}
 
 	public DIRECTIONS choisirDirection(){
