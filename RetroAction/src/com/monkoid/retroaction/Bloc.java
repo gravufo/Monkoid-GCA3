@@ -109,7 +109,7 @@ public class Bloc implements Drawable {
 		this.type = type;
 		switch(this.type){
 		case INVISIBLE : 
-			this.image = BitmapLibrary.getGreen().BlocblueBmp_;
+			this.image = BitmapLibrary.getGreen().BlocInvisibleBmp_;
 			break;
 		case GREF :
 			this.image = BitmapLibrary.getGreen().BlocgreenBmp_;
@@ -125,20 +125,5 @@ public class Bloc implements Drawable {
 
 	public void onUpdate() {
 		// TODO Auto-generated method stub
-		/*if(this.type == BlockType.GREF)
-			switch(this.direction){
-				case 0 : 
-					break;
-				case 1 :
-					position.y++;
-					break;
-				case 2 :
-					position.x--;
-					break;
-				case 3 :
-					position.y--;
-					break;
-			}
-		 */		
 	}
 }

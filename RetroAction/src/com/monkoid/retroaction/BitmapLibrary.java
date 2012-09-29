@@ -13,6 +13,7 @@ public class BitmapLibrary {
 	public Bitmap BlocredBmp_;
 	public Bitmap BlocyellowBmp_;
 	public Bitmap PlatformBmp_;
+	public Bitmap BlocInvisibleBmp_;
 	private Context context_;
 
 	
@@ -29,11 +30,12 @@ public class BitmapLibrary {
 	
 	public void init(Context context){
 		KangooBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.kangoo);
-		BlocblueBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.blue_pixel_proto);
-		BlocgreenBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.green_pixel_proto);
-		BlocpurpleBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.purple_pixel_proto);
-		BlocyellowBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.yellow_pixel_proto);
-		BlocredBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.red_pixel_proto);
+		BlocblueBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.blue64);
+		BlocgreenBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.green64);
+		BlocpurpleBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.purple64);
+		BlocyellowBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.yellow64);
+		BlocredBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.red64);
 		PlatformBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.new_game_btn_img);
+		BlocInvisibleBmp_ = BitmapFactory.decodeResource(context.getResources(), R.drawable.empty64);
 	}
 }
