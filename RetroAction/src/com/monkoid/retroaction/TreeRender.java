@@ -8,7 +8,7 @@ import android.graphics.Canvas;
 
 public class TreeRender {
 	
-	public Vector drawables = new Vector();
+	public Vector<Drawable> drawables = new Vector<Drawable>();
 	private Context context_ = null;
 	
 	public TreeRender(){
@@ -19,8 +19,7 @@ public class TreeRender {
 	}
 	
 	public void draw(Canvas canvas){
-		Iterator vItr = drawables.iterator(); 
-		while(vItr.hasNext())
-			((Drawable) vItr.next()).onDraw(canvas);
+			for(Drawable d: drawables)
+				d.onDraw(canvas);
 	}
 }

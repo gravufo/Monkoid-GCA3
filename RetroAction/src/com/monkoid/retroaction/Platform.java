@@ -42,4 +42,9 @@ public class Platform implements Drawable
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void onUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
 }

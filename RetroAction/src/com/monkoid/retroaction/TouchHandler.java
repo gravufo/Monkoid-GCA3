@@ -64,7 +64,6 @@ public class TouchHandler
 
 		case MotionEvent.ACTION_MOVE:
 			Log.d("TouchHandler", "ACTION_MOVE");
-			platform.move((int) event.getX(), (int) event.getY());
 			break;
 		}
 	}

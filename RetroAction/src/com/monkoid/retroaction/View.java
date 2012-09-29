@@ -25,8 +25,8 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	private Platform platform;
 	private TouchHandler touchHandler;
 	private Paint textPaint;
-	private TreeRender treeRender;
-	
+	public TreeRender treeRender;
+	public Terrain t = null;
 	public View(Context context,Activity _act, Resources _res) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -34,17 +34,14 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	      getHolder().addCallback(this);
 		 // make the GamePanel focusable so it can handle events
 	      setFocusable(true);
-	      Log.d("view", "Constructor");
 	      mainThread_ = new MainThread(this.getHolder(), this);
 	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-		Log.d("View", "onDraw");
 		if(canvas != null){
 			canvas.drawColor(Color.BLACK);
 			treeRender.draw(canvas);
-
 		}
 	}
 	
@@ -67,34 +64,32 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 		// TODO Auto-generated method stub
 		BitmapLibrary.getGreen().init(this.getContext());
 		this.treeRender = new TreeRender();
-		this.initTreeRender();
 		this.mainThread_.start();
 		this.screenWidth_ = this.getWidth();
 		this.screenHeight_ = this.getHeight();
 		this.screenDensity_ = this.getContext().getResources().getDisplayMetrics().densityDpi;
+		this.initTreeRender();
 	}
 	
 	private void initTreeRender(){
-		Terrain t = null;
-		this.treeRender.add(new Kangoo());
 		switch(this.screenDensity_){
 	     case DisplayMetrics.DENSITY_LOW:
-	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 40, 40);
-	                break;
+	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 64, 64);
+	     break;
 	     case DisplayMetrics.DENSITY_MEDIUM:
-	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 20, 20);
-	                 break;
+	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 64, 64);
+	      break;
 	     case DisplayMetrics.DENSITY_HIGH:
-	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 10, 10);
-	                 break;
+	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 64, 64);
+	      break;
 	}
-		t.genererCube();
-		t.genererCube();
+//		t.genererCube();
+//		t.genererCube();
 	
 		this.treeRender.add(t);
 
 	//	this.treeRender.add(platform = new Platform(100,100));
-	//  touchHandler = new TouchHandler(platform);
+	  touchHandler = new TouchHandler(platform);
 	}
 	
 	public void surfaceDestroyed(SurfaceHolder holder) {

@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 public class BitmapLibrary {
 	private static BitmapLibrary green_ = null;
 	public Bitmap KangooBmp_;
-
 	public Bitmap BlocblueBmp_;
 	public Bitmap BlocgreenBmp_;
 	public Bitmap BlocpurpleBmp_;
