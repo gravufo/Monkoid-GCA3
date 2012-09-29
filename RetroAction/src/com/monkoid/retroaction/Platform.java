@@ -17,6 +17,16 @@ public class Platform implements Drawable
 		bmp_ = BitmapLibrary.getGreen().KangooBmp_;
 	}
 	
+	public int getX()
+	{
+		return this.x;
+	}
+	
+	public int getY()
+	{
+		return this.y;
+	}
+	
 	public void move(int x, int y)
 	{
 		this.x = x;
@@ -25,17 +35,37 @@ public class Platform implements Drawable
 	
 	public void moveDown()
 	{
-		
+		this.y += 5;
 	}
 	
 	public void moveUp()
 	{
-		
+		this.y -= 5;
+	}
+	
+	public void moveLeft()
+	{
+		this.x -= 5;
+	}
+	
+	public void moveRight()
+	{
+		this.x += 5;
+	}
+	
+	public void moveX(int x)
+	{
+		this.x += x;
+	}
+	
+	public void moveY(int y)
+	{
+		this.y += y;
 	}
 
 	public void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
-		canvas.drawBitmap(bmp_, this.x, this.y, null);
+		canvas.drawBitmap(bmp_, this.x + 150, this.y + 250, null);
 	}
 
 	public void initBmp(Bitmap bmp) {

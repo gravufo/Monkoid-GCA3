@@ -15,6 +15,8 @@ public class TouchHandler
 			finalY = 0,
 			deltaX = 0,
 			deltaY = 0;
+	private boolean axisY = false,
+			axisX = true;
 	private Platform platform;
 	
 	public TouchHandler(Platform platform)
@@ -37,33 +39,93 @@ public class TouchHandler
 			break;
 			
 		case MotionEvent.ACTION_UP:
+			
+			break;
+
+		case MotionEvent.ACTION_MOVE:
+			Log.d("TouchHandler", "ACTION_MOVE");
+			
 			finalX = (int) event.getX();
 			finalY = (int) event.getY();
 			
 			deltaX = finalX - initialX;
 			deltaY = finalY - initialY;
 			
-			if(deltaX < 0)
+			initialX = finalX;
+			initialY = finalY;
+			
+			if(Math.abs(platform.getX() + platform.getY()) <= 10)
 			{
-				// send a LEFT movement
-			}
-			else
-			{
-				// send a RIGHT movement
+				axisY = true;
+				axisX = true;
 			}
 			
-			if(deltaY < 0)
+			if(axisX && axisY)
 			{
-				// send an UP movement 
+				// p-e finalX et finalY a la place de delta...
+				if(Math.abs(deltaX) > Math.abs(deltaY))
+				{
+					axisY = false;
+					
+					if(deltaX > 0)
+					{
+						// platform.moveRight();
+						platform.moveX(deltaX);
+					}
+					else
+					{
+						// platform.moveLeft();
+						platform.moveX(deltaX);
+					}
+				}
+				else
+				{
+					axisX = false;
+					
+					if(deltaY > 0)
+					{
+						// platform.moveDown();
+						platform.moveY(deltaY);
+					}
+					else
+					{
+						// platform.moveUp();
+						platform.moveY(deltaY);
+					}
+				}
 			}
 			else
 			{
-				// send an DOWN movement
-			}
-			break;
+				if(deltaX < 0 && axisX)
+				{
+					// send a LEFT movement
+					// platform.moveLeft();
 
-		case MotionEvent.ACTION_MOVE:
-			Log.d("TouchHandler", "ACTION_MOVE");
+					platform.moveX(deltaX);
+				}
+				else if(deltaX > 0 && axisX)
+				{
+					// send a RIGHT movement
+					// platform.moveRight();
+
+					platform.moveX(deltaX);
+				}
+				
+				if(deltaY < 0 && axisY)
+				{
+					// send an UP movement
+					// platform.moveUp();
+					
+					platform.moveY(deltaY);
+				}
+				else if(deltaY > 0 && axisY)
+				{
+					// send a DOWN movement
+					// platform.moveDown();
+
+					platform.moveY(deltaY);
+				}
+			}
 			break;
 		}
 	}

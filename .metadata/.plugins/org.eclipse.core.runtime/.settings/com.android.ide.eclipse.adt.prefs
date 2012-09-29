@@ -1,5 +1,4 @@
-#Sat Sep 29 03:28:52 EDT 2012
-com.android.ide.eclipse.adt.sdk=C\:\\Users\\Phil\\AppData\\Local\\Android\\android-sdk\\
-eclipse.preferences.version=1
-design.palette.flyout.width=150
 com.android.ide.eclipse.adt.fixLegacyEditors=1
+com.android.ide.eclipse.adt.sdk=C\:\\Program Files (x86)\\Android\\android-sdk
+design.palette.flyout.width=150
+eclipse.preferences.version=1

@@ -38,7 +38,7 @@ public class MainThread extends Thread{
 	        	long new_time = System.currentTimeMillis();
 	        	 synchronized(this.surfaceHolder_) 
 	              {
-	        		 if((new_time - lastTimeDraw_) > 33){
+	        		 if((new_time - lastTimeDraw_) > 5){
 	        			 this.view_.onDraw(c);
 	        			 lastTimeDraw_ = new_time;
 	        			 Log.d("MainThread", "Draw");
