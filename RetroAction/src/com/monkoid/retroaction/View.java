@@ -14,6 +14,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -25,9 +26,9 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 
 	private MainThread mainThread_;
 	
-	private float m_ScaleWidth = 480;			// Facteur de grossissement selon la taille de l'écran
-	private float m_ScaleHeight = 640;		// Facteur de grossissement selon la taille de l'écran
-	
+	private float screenWidth_ = 0;		
+	private float screenHeight_ = 0;		
+	private int screenDensity_ = 0;
 	private Paint textPaint;
 	private TreeRender treeRender;
 	
@@ -72,15 +73,29 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 		this.treeRender = new TreeRender();
 		this.initTreeRender();
 		this.mainThread_.start();
+		this.screenWidth_ = this.getWidth();
+		this.screenHeight_ = this.getHeight();
+		this.screenDensity_ = this.getContext().getResources().getDisplayMetrics().densityDpi;
 	}
 	
 	private void initTreeRender(){
 		this.treeRender.add(new Kangoo());
+		switch(this.screenDensity_){
+	     case DisplayMetrics.DENSITY_LOW:
+	    	this.treeRender.add(new Terrain(this.screenWidth_, this.screenHeight_, 40, 40));
+	                break;
+	     case DisplayMetrics.DENSITY_MEDIUM:
+	    	this.treeRender.add(new Terrain(this.screenWidth_, this.screenHeight_, 20, 20));
+	                 break;
+	     case DisplayMetrics.DENSITY_HIGH:
+	    	this.treeRender.add(new Terrain(this.screenWidth_, this.screenHeight_, 10, 10));
+	                 break;
+	}
+		
 	}
 	
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 }

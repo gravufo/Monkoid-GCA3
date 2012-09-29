@@ -21,6 +21,5 @@ public class Kangoo implements Drawable{
 	public void initBmp(Bitmap bmp) {
 		// TODO Auto-generated method stub
 		bmp_ = bmp;
-	}
-	
+	}	
 }
