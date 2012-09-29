@@ -2,7 +2,8 @@ package com.monkoid.retroaction;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.Menu;
 
 public class MainActivity extends Activity {
@@ -21,6 +22,4 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
-    
-
 }

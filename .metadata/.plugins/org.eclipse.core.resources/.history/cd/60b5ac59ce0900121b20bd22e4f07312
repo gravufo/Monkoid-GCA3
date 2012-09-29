@@ -22,5 +22,9 @@ public class MainActivity extends Activity {
         return true;
     }
     
-
+    @Override
+    public void onDraw(Canvas canvas){
+    	
+    	
+    }
 }

@@ -2,7 +2,8 @@ package com.monkoid.retroaction;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.Menu;
 
 public class MainActivity extends Activity {
@@ -22,5 +23,9 @@ public class MainActivity extends Activity {
         return true;
     }
     
-
+    @Override
+    public void onDraw(Canvas canvas){
+    	
+    	
+    }
 }
