@@ -1,8 +1,5 @@
 package com.monkoid.retroaction;
 
-import com.monkoid.retroaction.R;
-import com.monkoid.retroaction.R.menu;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;

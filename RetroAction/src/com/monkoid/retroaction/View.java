@@ -1,10 +1,5 @@
 package com.monkoid.retroaction;
 
-import java.util.ArrayList;
-
-import com.monkoid.retroaction.R;
-import com.monkoid.retroaction.R.drawable;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,22 +8,32 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+<<<<<<< HEAD
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+=======
+import android.os.Bundle;
+>>>>>>> a35e5c968769d83680408f98d6d85b68da159581
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.Window;
 
 public class View extends SurfaceView implements SurfaceHolder.Callback{
 
 
 	private MainThread mainThread_;
 	
+<<<<<<< HEAD
 	private float screenWidth_ = 0;		
 	private float screenHeight_ = 0;		
 	private int screenDensity_ = 0;
+=======
+	private float m_ScaleWidth = 480;			// Facteur de grossissement selon la taille de l'écran
+	private float m_ScaleHeight = 640;		// Facteur de grossissement selon la taille de l'écran
+	private Platform platform;
+	private TouchHandler touchHandler;
+>>>>>>> a35e5c968769d83680408f98d6d85b68da159581
 	private Paint textPaint;
 	private TreeRender treeRender;
 	
@@ -41,13 +46,13 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	      setFocusable(true);
 	      Log.d("view", "Constructor");
 	      mainThread_ = new MainThread(this.getHolder(), this);
-
 	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		Log.d("View", "onDraw");
 		if(canvas != null){
+			canvas.drawColor(Color.BLACK);
 			treeRender.draw(canvas);
 
 		}
@@ -58,6 +63,7 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
+		touchHandler.handleEvent(event);
 		return true;
 	}
 
@@ -79,19 +85,26 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	}
 	
 	private void initTreeRender(){
+		Terrain t = null;
 		this.treeRender.add(new Kangoo());
 		switch(this.screenDensity_){
 	     case DisplayMetrics.DENSITY_LOW:
-	    	this.treeRender.add(new Terrain(this.screenWidth_, this.screenHeight_, 40, 40));
+	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 40, 40);
 	                break;
 	     case DisplayMetrics.DENSITY_MEDIUM:
-	    	this.treeRender.add(new Terrain(this.screenWidth_, this.screenHeight_, 20, 20));
+	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 20, 20);
 	                 break;
 	     case DisplayMetrics.DENSITY_HIGH:
-	    	this.treeRender.add(new Terrain(this.screenWidth_, this.screenHeight_, 10, 10));
+	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 10, 10);
 	                 break;
 	}
-		
+		t.genererCube();
+		t.genererCube();
+	
+		this.treeRender.add(t);
+
+	//	this.treeRender.add(platform = new Platform(100,100));
+	//  touchHandler = new TouchHandler(platform);
 	}
 	
 	public void surfaceDestroyed(SurfaceHolder holder) {
