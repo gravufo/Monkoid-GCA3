@@ -16,8 +16,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class View extends SurfaceView implements SurfaceHolder.Callback{
-
-
 	private MainThread mainThread_;
 	private float screenWidth_ = 0;		
 	private float screenHeight_ = 0;		

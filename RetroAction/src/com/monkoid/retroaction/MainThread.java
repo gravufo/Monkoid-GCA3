@@ -30,7 +30,7 @@ public class MainThread extends Thread{
         Canvas c;
         c = null;
         ////Test
-        boolean update = false;
+        int update = 0;
         while(Curly){
 	        try 
 	        {
@@ -38,22 +38,23 @@ public class MainThread extends Thread{
 	        	long new_time = System.currentTimeMillis();
 	        	 synchronized(this.surfaceHolder_) 
 	              {
-	        		 if((new_time - lastTimeDraw_) > 33){
+	        		 if((new_time - lastTimeDraw_) > 15){
 	        			 this.view_.onDraw(c);
 	        			 lastTimeDraw_ = new_time;
 	        			 Log.d("MainThread", "Draw");
 	        		 }
 	        		 ////Test
-	        		 if(!update){
+	        		 
+	        		 if((new_time - lastTimeUpdateBlocs_) > 500){
+	        		   if(update < 4){
 	        			 this.view_.t.onUpdate();
-	        			 update = true;
+	        			 update++;
 	        		 }
-	        		 /*if((new_time - lastTimeUpdateBlocs_) > 500){
-	        			 if(this.view_.t != null)
-	        				 this.view_.t.onUpdate();
+	        			// if(this.view_.t != null)
+	        			//	 this.view_.t.onUpdate();
 	        			 lastTimeUpdateBlocs_ = new_time;
 	        			 Log.d("MainThread", "UpdateBlocs");
-	        		 }*/
+	        		 }
 	        		 
 	        		 
 	        		 /*if((new_time - lastTimeCreatBloc_) > 1000){
