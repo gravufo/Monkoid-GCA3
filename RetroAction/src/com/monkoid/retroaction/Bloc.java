@@ -36,7 +36,7 @@ public class Bloc implements Drawable {
 		this.type = BlockType.GREF;
 	}
 
-	public Bloc(int i, int j, BlockType type) {
+	public Bloc(int i, int j, BlockType type, int size) {
 		this.size = size;
 		this.setType(type);
 		this.position = new Vector3(i,j);
@@ -82,29 +82,52 @@ public class Bloc implements Drawable {
 	}
 	
 	public void onDraw(Canvas canvas){
-
-		
 			switch(couleur){
 			case BLUE : 
-				this.image = BitmapLibrary.getGreen().BlocblueBmp_;
+				if(size == 16)
+					this.image = BitmapLibrary.getGreen().Blocblue16_;
+				else if(size == 32)
+					this.image = BitmapLibrary.getGreen().Blocblue32_;
+				else
+					this.image = BitmapLibrary.getGreen().Blocblue64_;
 				break;
 			case GREEN :
-				this.image = BitmapLibrary.getGreen().BlocgreenBmp_;
+				if(size == 16)
+					this.image = BitmapLibrary.getGreen().Blocgreen16_;
+				else if(size == 32)
+					this.image = BitmapLibrary.getGreen().Blocgreen32_;
+				else
+					this.image = BitmapLibrary.getGreen().Blocgreen64_;
 				break;
 			case PURPLE:
-				this.image = BitmapLibrary.getGreen().BlocpurpleBmp_;
+				if(size == 16)
+					this.image = BitmapLibrary.getGreen().Blocpurple16_;
+				else if(size == 32)
+					this.image = BitmapLibrary.getGreen().Blocpurple32_;
+				else
+					this.image = BitmapLibrary.getGreen().Blocpurple64_;
 				break;
 			case YELLOW:
-				this.image = BitmapLibrary.getGreen().BlocyellowBmp_;
+				if(size == 16)
+					this.image = BitmapLibrary.getGreen().Blocyellow16_;
+				else if(size == 32)
+					this.image = BitmapLibrary.getGreen().Blocyellow32_;
+				else
+					this.image = BitmapLibrary.getGreen().Blocyellow64_;
 				break;
 			case RED:
-				this.image = BitmapLibrary.getGreen().BlocredBmp_;
+				if(size == 16)
+					this.image = BitmapLibrary.getGreen().Blocred16_;
+				else if(size == 32)
+					this.image = BitmapLibrary.getGreen().Blocred32_;
+				else
+					this.image = BitmapLibrary.getGreen().Blocred64_;
 				break;
 			}
 		
 
 		if(canvas != null)
-			canvas.drawBitmap(this.image, position.x*this.image.getWidth(), position.y*this.image.getHeight(), null);
+			canvas.drawBitmap(this.image, position.x*this.size, position.y*this.size, null);
 	}
 
 	public void initBmp(Bitmap bmp) {
@@ -115,36 +138,33 @@ public class Bloc implements Drawable {
 		this.type = type;
 		switch(this.type){
 		case INVISIBLE : 
-			this.image = BitmapLibrary.getGreen().BlocblueBmp_;
-			break;
-		case GREF :
-			this.image = BitmapLibrary.getGreen().BlocgreenBmp_;
+			if(size == 16)
+				this.image = BitmapLibrary.getGreen().BlocInvisible16_;
+			else if(size == 32)
+				this.image = BitmapLibrary.getGreen().BlocInvisible32_;
+			else
+				this.image = BitmapLibrary.getGreen().BlocInvisible64_;
 			break;
 		case RACINE:
-			this.image = BitmapLibrary.getGreen().BlocredBmp_;
+			if(size == 16)
+				this.image = BitmapLibrary.getGreen().Blocblue16_;
+			else if(size == 32)
+				this.image = BitmapLibrary.getGreen().Blocblue32_;
+			else
+				this.image = BitmapLibrary.getGreen().Blocblue64_;
 			break;
 		case PLATEFORME:
-			this.image = BitmapLibrary.getGreen().BlocyellowBmp_;
+			if(size == 16)
+				this.image = BitmapLibrary.getGreen().Blocblue16_;
+			else if(size == 32)
+				this.image = BitmapLibrary.getGreen().Blocblue32_;
+			else
+				this.image = BitmapLibrary.getGreen().Blocblue64_;
 			break;
 		}
 	}
 
 	public void onUpdate() {
 		// TODO Auto-generated method stub
-		/*if(this.type == BlockType.GREF)
-			switch(this.direction){
-				case 0 : 
-					break;
-				case 1 :
-					position.y++;
-					break;
-				case 2 :
-					position.x--;
-					break;
-				case 3 :
-					position.y--;
-					break;
-			}
-		 */		
 	}
 }

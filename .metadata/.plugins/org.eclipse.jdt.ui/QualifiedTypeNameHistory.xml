@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
+<<<<<<< HEAD
+<fullyQualifiedTypeName name="com.monkoid.retroaction.R"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.view.MotionEvent"/>
+<fullyQualifiedTypeName name="com.monkoid.retroaction.Drawable"/>
+=======
 <fullyQualifiedTypeName name="com.monkoid.retroaction.Bloc.DIRECTIONS"/>
 <fullyQualifiedTypeName name="com.monkoid.retroaction.Vector3"/>
 <fullyQualifiedTypeName name="com.monkoid.retroaction.Terrain"/>
+>>>>>>> d22cbead29da0fc550396b9c1a992d6b80396396
 </qualifiedTypeNameHistroy>

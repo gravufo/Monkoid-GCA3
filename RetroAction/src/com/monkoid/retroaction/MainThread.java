@@ -39,18 +39,18 @@ public class MainThread extends Thread{
 	        	 synchronized(this.surfaceHolder_) 
 	              {
 	        		 if((new_time - lastTimeDraw_) > 10){
+
 	        			 this.view_.onDraw(c);
 	        			 lastTimeDraw_ = new_time;
-	        			 Log.d("MainThread", "Draw");
 	        		 }
-	        		
+
 	        		 if((new_time - lastTimeUpdateBlocs_) >500){
 	        			 if(this.view_.t != null)
 	        				 this.view_.t.onUpdate();
 	        			 lastTimeUpdateBlocs_ = new_time;
 	        			 Log.d("MainThread", "UpdateBlocs");
 	        		 }
-	        		 
+
 	        		 
 	        		 if((new_time - lastTimeCreatBloc_) > 500){
 	        			this.view_.t.genererCube();

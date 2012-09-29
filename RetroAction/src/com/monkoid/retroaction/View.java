@@ -16,8 +16,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class View extends SurfaceView implements SurfaceHolder.Callback{
-
-
 	private MainThread mainThread_;
 	private float screenWidth_ = 0;		
 	private float screenHeight_ = 0;		
@@ -27,6 +25,7 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	private Paint textPaint;
 	public TreeRender treeRender;
 	public Terrain t = null;
+	
 	public View(Context context,Activity _act, Resources _res) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -74,24 +73,22 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	private void initTreeRender(){
 		switch(this.screenDensity_){
 	     case DisplayMetrics.DENSITY_LOW:
-	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 64, 64);
+	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 16, 16);
 	     break;
 	     case DisplayMetrics.DENSITY_MEDIUM:
-	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 64, 64);
-	      break;
 	     case DisplayMetrics.DENSITY_HIGH:
-	     default:
-	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 64, 64);
-	      break;
-	}
-//		t.genererCube();
-//		t.genererCube();
-		
-		t.parcourirGrille(t.GetGridCenter(), true, new Vector3(0,0) );
-		this.treeRender.add(t);
 
-	//	this.treeRender.add(platform = new Platform(100,100));
-	  touchHandler = new TouchHandler(platform);
+	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 16, 16);
+	      break;
+	     default:
+	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 32, 32);
+	      break;
+	      
+	}
+		//t.parcourirGrille(t.GetGridCenter(), true, new Vector3(0,0) );
+		this.treeRender.add(t);
+		this.treeRender.add(platform = new Platform(0,0));
+		touchHandler = new TouchHandler(platform);
 	}
 	
 	public void surfaceDestroyed(SurfaceHolder holder) {

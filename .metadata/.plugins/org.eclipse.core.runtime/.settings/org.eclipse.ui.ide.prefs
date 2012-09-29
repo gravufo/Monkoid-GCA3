@@ -1,7 +1,13 @@
+<<<<<<< HEAD
+PROBLEMS_FILTERS_MIGRATE=true
+eclipse.preferences.version=1
+platformState=1348874047310
+=======
 #Sat Sep 29 11:16:47 EDT 2012
 eclipse.preferences.version=1
 TASKS_FILTERS_MIGRATE=true
 tipsAndTricks=true
 platformState=1319692933654
+>>>>>>> d22cbead29da0fc550396b9c1a992d6b80396396
 quickStart=false
-PROBLEMS_FILTERS_MIGRATE=true
+tipsAndTricks=true
