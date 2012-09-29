@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import com.monkoid.retroaction.Bloc;
+import com.monkoid.retroaction.Bloc.BlockType;
 import com.monkoid.retroaction.Drawable;
 
 public class Terrain implements Drawable {
@@ -15,14 +16,42 @@ public class Terrain implements Drawable {
 	int longueur;
 	int largeur;
 	int tailleAirDeJeu = 400;
-	LinkedList<Bloc> list_blocs_libres;
-	LinkedList<Bloc> list_blocs_attaches;
+	public LinkedList<Bloc> list_blocs_libres;
+	public LinkedList<Bloc> list_blocs_attaches;
 
-	Random generateur;
+	public Random generateur;
+	public Bloc[][] GameGrid;
 	
-	public Terrain(float screen_width, float screen_height, int width_block, int height_block){
+	
+	
+	public Terrain(float screen_width, float screen_height, int block_width, int block_height){
 		
+		int blockCountX = (int)(screen_width  / block_width);
+		int blockCountY = (int)(screen_height / block_height);
+		
+		if( blockCountX % 2 != 0 )
+			blockCountX++;
+		if( blockCountY % 2 != 0 )
+			blockCountY++;
+		
+		GameGrid = new Bloc[blockCountX][blockCountY];
+		for( int i = 0 ; i < block_width; i++)
+		{
+			for( int j = 0; j < block_height; j++ )
+			{
+				GameGrid[i][j] = new Bloc(i, j, block_width);
+			}	
+		}
+		
+		Vector3 center = GetGridCenter();
+		GameGrid[center.x][center.y].type = BlockType.RACINE;
 	}
+	
+	public Vector3 GetGridCenter(){
+		
+		return new Vector3((GameGrid.length + 1) / 2, (GameGrid[0].length + 1) / 2);
+	}
+	
 	public Terrain(int tailleX, int tailleY, int tailleAirDeJeu,
 			LinkedList<Bloc> list_blocs_libres,LinkedList<Bloc> list_blocs_attaches) {
 		super();
@@ -46,6 +75,7 @@ public class Terrain implements Drawable {
 
 	void genererCube(){
 		Bloc temp = new Bloc();
+		
 		temp.couleur =  Math.abs(generateur.nextInt()%5);
 		switch(temp.couleur){
 		case 0 : 
@@ -71,9 +101,9 @@ public class Terrain implements Drawable {
 	}
 
 	
-	Vector choisirPosition(int direction){
+	Vector3 choisirPosition(int direction){
 
-		Vector position = new Vector(0,0);
+		Vector3 position = new Vector3(0,0);
 		
 		switch(direction){
 		case 0 : 
