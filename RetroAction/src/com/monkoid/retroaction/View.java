@@ -2,13 +2,19 @@ package com.monkoid.retroaction;
 
 import java.util.ArrayList;
 
+import com.monkoid.retroaction.R;
+import com.monkoid.retroaction.R.drawable;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.Window;
@@ -16,7 +22,7 @@ import android.view.Window;
 public class View extends SurfaceView implements SurfaceHolder.Callback{
 
 
-	private MainThread m_Thread;
+	private MainThread mainThread_;
 	
 	private float m_ScaleWidth = 480;			// Facteur de grossissement selon la taille de l'écran
 	private float m_ScaleHeight = 640;		// Facteur de grossissement selon la taille de l'écran
@@ -28,52 +34,44 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	      getHolder().addCallback(this);
 		 // make the GamePanel focusable so it can handle events
 	      setFocusable(true);
-	}
-
-	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-		
-	}
-	
-	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
-		
-		m_Thread = new MainThread(holder, this);
-		m_Thread.start();
-	}
-	
-	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		boolean retry = true;
-		this.m_Thread.setRunning(false);
-		while (retry) {
-			try {
-				this.m_Thread.join();
-				retry = false;
-			} catch (InterruptedException e) {
-				// we will try it again and again...
-			}
-		}
+	      Log.d("view", "Constructor");
+	      mainThread_ = new MainThread(this.getHolder(), this);
 	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
+		Log.d("View", "onDraw");
+		if(canvas != null)
+		{
+			Bitmap kangoo = BitmapFactory.decodeResource(getResources(),
+                    R.drawable.kangoo);
+			canvas.drawColor(Color.BLACK);
+			canvas.drawBitmap(kangoo, 10, 10, null);
+		}
 			
 	}
-	
 	protected void update(){
 		
 	}
 
-	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		return true;
 	}
 
-	
-	public MainThread getMenuThread()
-	{
-		return this.m_Thread;
+	public void surfaceChanged(SurfaceHolder holder, int format, int width,
+			int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void surfaceCreated(SurfaceHolder holder) {
+		// TODO Auto-generated method stub
+		this.mainThread_.start();
+	}
+
+	public void surfaceDestroyed(SurfaceHolder holder) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
