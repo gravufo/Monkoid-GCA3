@@ -41,11 +41,10 @@ public class MainThread extends Thread{
 	        		 if((new_time - lastTimeDraw_) > 33){
 	        			 this.view_.onDraw(c);
 	        			 lastTimeDraw_ = new_time;
-	        			 Log.d("MainThread", "Draw");
 	        		 }
 	        		 ////Test
 	        		 if(!update){
-	        			 this.view_.t.onUpdate();
+	        			// this.view_.t.onUpdate();
 	        			 update = true;
 	        		 }
 	        		 /*if((new_time - lastTimeUpdateBlocs_) > 500){

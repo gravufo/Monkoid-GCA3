@@ -101,6 +101,8 @@ public class Terrain implements Drawable {
 
 	public void parcourirGrille( Vector3 origin, boolean newToggleCheckValue, Vector3 whereFrom  ){
 
+		if(origin.x > (GameGrid.length-1) || origin.y > (GameGrid[0].length-1) || origin.x < 0 || origin.y < 0)
+			return;
 		
 		Bloc currentBlock = GameGrid[origin.x][origin.y];
 
@@ -121,24 +123,27 @@ public class Terrain implements Drawable {
 
 			switch( state ){
 			// Right
-			case 0:  delta = new Vector3( 1, 0);
+			case 0: 
+				delta = new Vector3(1, 0);
 			break;
 			// Top
-			case 1:  delta = new Vector3( 0, 1);
+			case 1:  
+				delta = new Vector3(0, 1);
 			break;
 			// Left
-			case 2:  delta = new Vector3( -1, 0);
+			case 2:  
+				delta = new Vector3(-1, 0);
 			break;
 			// Down
-			case 3:  delta = new Vector3( 0, -1);
+			case 3:  
+				delta = new Vector3(0, -1);
 			break;
 			}
 
 			Vector3 nextPos = origin.Add(delta);
-			if( !delta.HasVisited(whereFrom) ){
-				if(nextPos.x >= 0 &&  nextPos.x < blockCountX && nextPos.y >= 0 &&  nextPos.y < blockCountY)
-					parcourirGrille(nextPos, newToggleCheckValue, delta);
-			}
+			//if( !delta.HasVisited(whereFrom) ){
+			parcourirGrille(nextPos, newToggleCheckValue, delta);
+			//}
 			
 			state++;
 		}
