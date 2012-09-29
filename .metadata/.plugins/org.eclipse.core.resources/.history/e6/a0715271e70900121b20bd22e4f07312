@@ -36,7 +36,6 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	      setFocusable(true);
 	      Log.d("view", "Constructor");
 	      mainThread_ = new MainThread(this.getHolder(), this);
-
 	}
 	
 	@Override
@@ -54,7 +53,6 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 		}
 			
 	}
-	
 	protected void update(){
 		
 	}

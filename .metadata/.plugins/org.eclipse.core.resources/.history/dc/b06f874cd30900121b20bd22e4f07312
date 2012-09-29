@@ -36,7 +36,6 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	      setFocusable(true);
 	      Log.d("view", "Constructor");
 	      mainThread_ = new MainThread(this.getHolder(), this);
-
 	}
 	
 	@Override
@@ -46,15 +45,13 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 		{
 			Bitmap kangoo = BitmapFactory.decodeResource(getResources(),
                     R.drawable.kangoo);
-			Bitmap newGameBtn = BitmapFactory.decodeResource(getResources(), R.drawable.new_game_btn_img);
+			Bitmap newGameBtn - BitmapFactory.decodeResource(getResources(), R.drawable.new_game_btn_img);
 			canvas.drawColor(Color.BLACK);
-			
 			canvas.drawBitmap(kangoo, 10, 10, null);
-			canvas.drawBitmap(newGameBtn, 50, 50, null);
+			
 		}
 			
 	}
-	
 	protected void update(){
 		
 	}
