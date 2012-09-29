@@ -83,7 +83,8 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	}
 //		t.genererCube();
 //		t.genererCube();
-	
+		
+		t.parcourirGrille(t.GetGridCenter(), true, new Vector3(0,0) );
 		this.treeRender.add(t);
 
 	//	this.treeRender.add(platform = new Platform(100,100));

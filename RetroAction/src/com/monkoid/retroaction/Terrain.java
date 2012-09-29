@@ -9,6 +9,8 @@ import android.graphics.Canvas;
 
 import com.monkoid.retroaction.Bloc;
 import com.monkoid.retroaction.Bloc.BlockType;
+import com.monkoid.retroaction.Bloc.COLORS;
+import com.monkoid.retroaction.Bloc.DIRECTIONS;
 import com.monkoid.retroaction.Drawable;
 
 public class Terrain implements Drawable {
@@ -21,30 +23,32 @@ public class Terrain implements Drawable {
 
 	public Random generateur;
 	public Bloc[][] GameGrid;
-	
+
 	int blockCountX = 0;
 	int blockCountY = 0;
-	
+
 	public Terrain(float screen_width, float screen_height, int block_width, int block_height){
-		
+
 		blockCountX = (int)(screen_width  / block_width);
 		blockCountY = (int)(screen_height / block_height);
-		
+
 		if( blockCountX % 2 == 0 ) blockCountX++;
 		if( blockCountY % 2 == 0 ) blockCountY++;
-		
+
 		GameGrid = new Bloc[blockCountX][blockCountY];
 		for( int i = 0 ; i < blockCountX; i++)
+		{	
 			for( int j = 0; j < blockCountY; j++ )
-				GameGrid[i][j] = new Bloc(i, j, BlockType.INVISIBLE);
-		
+				GameGrid[i][j] = new Bloc(i, j, BlockType.PLATEFORME);
+		}
+
 		Vector3 center = GetGridCenter();
 		GameGrid[center.x][center.y].setType(BlockType.RACINE);
-		GameGrid[1][4].setType(BlockType.GREF);
+		//GameGrid[1][4].setType(BlockType.GREF);
 	}
-	
 
-	
+
+
 	public Terrain(int tailleX, int tailleY, int tailleAirDeJeu,
 			LinkedList<Bloc> list_blocs_libres,LinkedList<Bloc> list_blocs_attaches) {
 		super();
@@ -66,45 +70,143 @@ public class Terrain implements Drawable {
 		generateur = new Random();
 	}
 
-	
-	Vector3 choisirPosition(int direction){
+
+	Vector3 choisirPosition(DIRECTIONS currentBlockDirection){
 
 		Vector3 position = new Vector3(0,0);
-		
-		switch(direction){
-		case 0 : 
+
+		switch(currentBlockDirection){
+		case  DROITE : 
 			position.x = 0;
-			position.y = longueur/2 + Math.abs(generateur.nextInt()%longueur/2);
+			position.y = longueur/2 + Math.abs(generateur.nextInt()% (longueur/2));
 			break;
-		case 1 :
-			position.x = Math.abs(generateur.nextInt()%largeur/2);
+		case BAS :
+			position.x = Math.abs(generateur.nextInt()% (largeur/2));
 			position.y = 0;
 			break;
-		case 2 :
+		case GAUCHE :
 			position.x = largeur;
-			position.y = Math.abs(generateur.nextInt()%longueur/2);
+			position.y = Math.abs(generateur.nextInt()% (longueur/2));
 			break;
-		case 3 :
-			position.x = largeur/2 + Math.abs(generateur.nextInt()%largeur/2);
+		case HAUT :
+			position.x = largeur/2 + Math.abs(generateur.nextInt()% (largeur/2));
 			position.y = longueur;
 			break;
 		}
 
-		
+
 		return position;
 	}
-	
-	private void verifierLaser(){
+
+
+	public void parcourirGrille( Vector3 origin, boolean newToggleCheckValue, Vector3 whereFrom  ){
+
+		if(origin.x > (GameGrid.length-1) || origin.y > (GameGrid[0].length-1) || origin.x < 0 || origin.y < 0)
+			return;
 		
+		Bloc currentBlock = GameGrid[origin.x][origin.y];
+
+		// Stopping condition
+		if( currentBlock.type == BlockType.INVISIBLE )
+			return;
+
+		// This means the block has already been verified
+		if(currentBlock.toggleCheckValue ==  newToggleCheckValue)
+			return;
+
+		currentBlock.toggleCheckValue = newToggleCheckValue;
+
+		int state = 0;
+
+		while (state <= 1){
+			Vector3 delta = null;
+
+			switch( state ){
+			// Right
+			case 0: 
+				delta = new Vector3(1, 0);
+			break;
+			// Top
+			case 1:  
+				delta = new Vector3(0, 1);
+			break;
+			// Left
+			case 2:  
+				delta = new Vector3(-1, 0);
+			break;
+			// Down
+			case 3:  
+				delta = new Vector3(0, -1);
+			break;
+			}
+
+			Vector3 nextPos = origin.Add(delta);
+			//if( !delta.HasVisited(whereFrom) ){
+			parcourirGrille(nextPos, newToggleCheckValue, delta);
+			//}
+			
+			state++;
+		}
+
+		currentBlock.couleur = COLORS.BLUE;
+
+		//		// Check all directions, recursively, for the current block
+		//		for( int i = 0; i < 2; i++ ){
+		//			for( int j = 0; j < 2; j++){
+		//				
+		//				int signe =	(int)Math.pow(-1, i);
+		//				
+		//				int dx= signe * j;
+		//				int dy= signe * ((j+1) %2);
+		//				
+		//				Vector3 delta = new Vector3(dx, dy);
+		//				Vector3 nextPos = origin.Add(delta);
+		//				System.out.print(delta.x + " " + delta.y);
+		//				
+		//				if( nextPos.x >= 0 &&  nextPos.x < blockCountX && nextPos.y >= 0 &&  nextPos.y < blockCountY)
+		//					parcourirGrille( nextPos, newToggleCheckValue);
+		//			}
+		//		}
+
+		// TRAITEMEN SPÉCIFIQUE
+		//ex:
+
 	}
-	
+
+	public DIRECTIONS choisirDirection(){
+
+		int tempDirection = generateur.nextInt()%4;
+		switch(tempDirection){
+
+		case 0: return DIRECTIONS.DROITE;
+		case 1: return DIRECTIONS.BAS;
+		case 3: return DIRECTIONS.HAUT;
+		case 4: return DIRECTIONS.GAUCHE;
+		default: return DIRECTIONS.BAS;
+		}
+
+	}
+
+	public static boolean blocDepasseLaser(Bloc blocAVerifier){
+
+		int facteur = 1;
+
+		if( blocAVerifier.direction == DIRECTIONS.BAS || blocAVerifier.direction == DIRECTIONS.GAUCHE  )
+			facteur = -1;
+
+		if( facteur *  blocAVerifier.position.x > 0 || facteur * blocAVerifier.position.y > 0   )
+			return true;
+
+		return false;
+	}
+
 	private void actualiserPositionBlocs(){	
 	}
 
 	public Bloc getBloc(int i, int j){
 		return GameGrid[i][j];	
 	}
-	
+
 	public void onDraw(Canvas canvas) {
 		for( int i = 0 ; i < blockCountX; i++)
 			for( int j = 0; j < blockCountY; j++ )
@@ -112,49 +214,52 @@ public class Terrain implements Drawable {
 	}
 
 	public void onUpdate() {
-		// TODO Auto-generated method stub
-		for( int i = 0 ; i < blockCountX; i++)
-			for( int j = 0; j < blockCountY; j++ )
-				if(GameGrid[i][j].type == BlockType.GREF){
-					GameGrid[i][j].setType(BlockType.INVISIBLE);
-					GameGrid[i+1][j].setType(BlockType.GREF);
-					return;
-				}
-					
+		//		// TODO Auto-generated method stub
+		//		for( int i = 0 ; i < blockCountX; i++)
+		//			for( int j = 0; j < blockCountY; j++ )
+		//				if(GameGrid[i][j].type == BlockType.GREF){
+		//					GameGrid[i][j].setType(BlockType.INVISIBLE);
+		//					GameGrid[i+1][j].setType(BlockType.GREF);
+		//					return;
+		//				}
+
 	}
-	
+
 	void genererCube(){
 		Bloc temp = new Bloc();
-		
-		temp.couleur =  Math.abs(generateur.nextInt()%5);
-		switch(temp.couleur){
+
+		int tempCouleur =  Math.abs(generateur.nextInt()%5);
+
+		switch(tempCouleur){
 		case 0 : 
-			temp.image = BitmapLibrary.getGreen().BlocblueBmp_;
+			temp.couleur = COLORS.BLUE;
 			break;
 		case 1 :
-			temp.image = BitmapLibrary.getGreen().BlocgreenBmp_;
+			temp.couleur = COLORS.GREEN;
 			break;
 		case 2 :
-			temp.image = BitmapLibrary.getGreen().BlocpurpleBmp_;
+			temp.couleur = COLORS.PURPLE;;
 			break;
 		case 3 :
-			temp.image = BitmapLibrary.getGreen().BlocyellowBmp_;
+			temp.couleur = COLORS.YELLOW;;
 			break;
 		case 4 :
-			temp.image = BitmapLibrary.getGreen().BlocredBmp_;
+			temp.couleur = COLORS.RED;
 			break;
 		}
-		temp.direction = generateur.nextInt()%4;
-		temp.position = choisirPosition(temp.direction);
+
+
+		DIRECTIONS currentBlockDirection = choisirDirection();
+		temp.position = choisirPosition(currentBlockDirection);
 		list_blocs_libres.add(temp);
-		
+
 	}
-	
+
 	public Vector3 GetGridCenter(){
 		return new Vector3((GameGrid.length) / 2, (GameGrid[0].length) / 2);
 	}
 
 
 
-	
+
 }
