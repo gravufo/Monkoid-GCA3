@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Bundle;
 
 public class TimeCounter implements Drawable {
 	public long timeInNs = 0;
@@ -39,6 +40,11 @@ public class TimeCounter implements Drawable {
 				
 				if(temp1 <= 0){
 					view.mainThread_.Curly=false;
+					Bundle dataBundle = new Bundle();
+
+					dataBundle.putInt("pointage", view.t.UpdateCaRace());
+
+					this.intent.putExtra("pointage",view.t.UpdateCaRace().intValue());
 					this.activity.startActivity(this.intent);
 					temp1 = 0;
 				}
@@ -48,16 +54,17 @@ public class TimeCounter implements Drawable {
 			if(temp1 < 5000)
 				size=110;
 			if(temp1<1000)
-				size =140;
+				size =130;
 			
 			Double temps = (double)temp1;
 			temps/=1000;
 			Paint p = new Paint();
-			p.setColor(Color.BLACK);
+			p.setColor(Color.WHITE);
 			p.setStyle(Paint.Style.FILL);
 			p.setAntiAlias(true);
 			p.setTextSize(size);
-			canvas.drawText(temps.toString(), 150,150, p);
+			temps+=0.000000001; // I AM THE BOSS
+			canvas.drawText(temps.toString().substring(0, 4)+" sec", 150,150, p);
 		}
 
 	}

@@ -13,13 +13,14 @@ import android.view.SurfaceView;
 
 public class View extends SurfaceView implements SurfaceHolder.Callback{
 	public MainThread mainThread_;
-	private float screenWidth_ = 0;		
-	private float screenHeight_ = 0;		
-	private int screenDensity_ = 0;
-	private TouchHandler touchHandler;
+	public float screenWidth_ = 0;		
+	public float screenHeight_ = 0;		
+	public int screenDensity_ = 0;
+	public TouchHandler touchHandler;
 	public TreeRender treeRender;
 	public Terrain t = null;
 	public Activity activity;
+	public Integer points = 0;
 	
 	public View(Context context,Activity _act, Resources _res) {
 		super(context);
@@ -27,6 +28,7 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 		// TODO Auto-generated constructor stub
 		// adding the callback (this) to the surface holder to intercept events
 	      getHolder().addCallback(this);
+	      points = 0;
 		 // make the GamePanel focusable so it can handle events
 	      setFocusable(true);
 	      mainThread_ = new MainThread(this.getHolder(), this);
@@ -35,7 +37,7 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	@Override
 	protected void onDraw(Canvas canvas) {
 		if(canvas != null){
-			canvas.drawColor(Color.GREEN);
+			canvas.drawColor(Color.BLACK);
 			treeRender.draw(canvas);
 		}
 	}
@@ -87,10 +89,13 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	     t = new Terrain(this.screenWidth_, this.screenHeight_, size, size);
 	     Intent i = new Intent(activity,MainMenu.class);
 	     TimeCounter c = new TimeCounter(45000,i,activity,this);//45000 milliseconds
+	     PointCounter pt= new PointCounter(this);
 	     //c.activity = activity;
 		//t.parcourirGrille(t.GetGridCenter(), true, new Vector3(0,0) );
-		this.treeRender.add(t);
+
 		this.treeRender.add(c);
+	 this.treeRender.add( pt);
+		this.treeRender.add(t);
 		//this.treeRender.add(platform = new Platform(0,0));
 		touchHandler = new TouchHandler(t, 16);
 	}

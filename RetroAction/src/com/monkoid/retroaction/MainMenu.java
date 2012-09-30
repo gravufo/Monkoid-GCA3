@@ -1,19 +1,23 @@
 package com.monkoid.retroaction;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainMenu extends Activity implements OnClickListener {
 
 	private Button newGame_;
 	private Button exit_;
+	private TextView  points;
 	private CidHandler cid;
 
 	@Override
@@ -25,9 +29,11 @@ public class MainMenu extends Activity implements OnClickListener {
 		setContentView(R.layout.main_menu);
 		newGame_ = (Button) findViewById(R.id.bNew);
 		exit_ = (Button) findViewById(R.id.bExit);
+		points = (TextView)findViewById(R.id.textView1);
 		newGame_.setOnClickListener(this);
 		exit_.setOnClickListener(this);
 		cid = CidHandler.getCidLife().initIntro(this);
+		points.setText("");
 	}
 
 	@Override
@@ -50,6 +56,13 @@ public class MainMenu extends Activity implements OnClickListener {
 		super.onResume();
 		cid.gameToggle(false);
 		cid.introToggle(true);
+		int latValue;
+		Bundle extras = getIntent().getExtras(); 
+		if(extras !=null)
+		{
+			latValue= (int)extras.getInt("pointage");
+			points.setText("Last game score :"+((Integer)latValue).toString()+" pts");
+		}
     }
 	
 	@Override

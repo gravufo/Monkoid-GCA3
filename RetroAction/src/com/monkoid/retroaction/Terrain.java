@@ -35,6 +35,8 @@ public class Terrain implements Drawable {
 	private List<Vector3> platformBlocksIndexList;
 
 	private MainThread mainThread_ = null;
+	
+	
 	public Terrain(float screen_width, float screen_height, int block_width, int block_height){
 		blockCountX = (int)(screen_width  / block_width);
 		blockCountY = (int)(screen_height / block_height);
@@ -68,7 +70,7 @@ public class Terrain implements Drawable {
 		GameGrid[center.x][center.y].setType(BlockType.RACINE);
 		GameGrid[center.x][center.y].couleur = COLORS.AUCUNE;
 		platformBlocksIndexList.add(center);
-
+		platformInTheFutur = new LinkedList<Bloc>(); 
 		generateur = new Random();
 		genererCube();
 	}
@@ -245,6 +247,7 @@ public class Terrain implements Drawable {
 			source.setType(BlockType.PLATEFORME);
 			source.direction= DIRECTIONS.AUCUNE;
 			platformBlocksIndexList.add(new Vector3(source.position.x, source.position.y));
+			platformInTheFutur.add(source);
 		}else 
 
 			if(destination.type == BlockType.LASER_H || destination.type == BlockType.LASER_V){
@@ -340,19 +343,19 @@ public class Terrain implements Drawable {
 	}
 
 	public Integer UpdateCaRace(){
+		JekiffCaRace = 0;
 		for(Bloc b: platformInTheFutur){
-			GameGrid[b.position.x][b.position.y] = new Bloc(b);
 			if(b.type != BlockType.RACINE)
 				if(b.couleur == COLORS.BLUE)
-					JekiffCaRace += 10000;
+					JekiffCaRace += 983;
 				else if(b.couleur == COLORS.GREEN)
-					JekiffCaRace += 100000;
+					JekiffCaRace += 1213;
 				else if(b.couleur == COLORS.RED)
-					JekiffCaRace += 1000000;
+					JekiffCaRace += 5352;
 				else if(b.couleur == COLORS.PURPLE)
-					JekiffCaRace += 10000000;
+					JekiffCaRace += 444778;
 				else if(b.couleur == COLORS.YELLOW)
-					JekiffCaRace += 100000000;
+					JekiffCaRace += 18;
 		}
 		return JekiffCaRace;
 	}
@@ -388,6 +391,7 @@ public class Terrain implements Drawable {
 			GameGrid[b.position.x][b.position.y] = new Bloc(b);
 			if(b.type == BlockType.RACINE)
 				this.racineVector = new Vector3(b.position.x, b.position.y);
+
 		}
 
 		int centre_y = this.GetGridCenter().y;
