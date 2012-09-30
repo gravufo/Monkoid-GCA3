@@ -40,12 +40,23 @@ public class Terrain implements Drawable {
 		for( int i = 0 ; i < blockCountX; i++)
 		{	
 			for( int j = 0; j < blockCountY; j++ )
-				GameGrid[i][j] = new Bloc(i, j, BlockType.PLATEFORME, block_width);
+				GameGrid[i][j] = new Bloc(i, j, BlockType.INVISIBLE, block_width);
 		}
 
 		Vector3 center = GetGridCenter();
 		GameGrid[center.x][center.y].setType(BlockType.RACINE);
-
+		//LASER_H
+		for(int i = 0; i< blockCountX;i++)
+		{
+			GameGrid[i][center.y].setType(BlockType.LASER_H);
+			GameGrid[i][center.y].couleur = COLORS.AUCUNE;
+		}
+		//	LASER_V
+		for(int j = 0; j< blockCountY;j++)
+		{
+			GameGrid[center.x][j].setType(BlockType.LASER_V);
+			GameGrid[center.x][j].couleur = COLORS.AUCUNE;
+		}
 		generateur = new Random();
 		genererCube();
 	}
@@ -207,15 +218,26 @@ public class Terrain implements Drawable {
 			for( int j = 0; j < blockCountY; j++ ){
 				GameGrid[i][j].updated = false;
 				}
-
+		Vector3 milieu = GetGridCenter();
 		
 		for( int i = 0 ; i < blockCountX; i++)
 			for( int j = 0; j < blockCountY; j++ )
 				if(GameGrid[i][j].type == BlockType.GREF){
 					if(blocDepasseLaser(GameGrid[i][j])){
-						GameGrid[i][j].setType(BlockType.INVISIBLE);
-						GameGrid[i][j].couleur = COLORS.GREEN;
-						GameGrid[i][j].direction= DIRECTIONS.AUCUNE;
+						if(GameGrid[i][j].direction == DIRECTIONS.GAUCHE && i == milieu.x+1 )
+						{
+							GameGrid[i][j].setType(BlockType.INVISIBLE);
+							GameGrid[i][j].couleur = COLORS.GREEN;
+							GameGrid[i][j].direction= DIRECTIONS.AUCUNE;
+						}
+						else if(GameGrid[i][j].direction == DIRECTIONS.HAUT && j == milieu.y+1){
+							GameGrid[i][j].setType(BlockType.INVISIBLE);
+							GameGrid[i][j].couleur = COLORS.GREEN;
+							GameGrid[i][j].direction= DIRECTIONS.AUCUNE;
+						}
+						else{
+							GameGrid[i][j].couleur = COLORS.AUCUNE;
+						}
 						GameGrid[i][j].updated = true;
 					}
 					
@@ -241,7 +263,7 @@ public class Terrain implements Drawable {
 	public void changerBlocPour(Bloc source, Bloc destination, BlockType type){
 		
 		destination.setType(BlockType.GREF);
-		destination.couleur = COLORS.PURPLE;
+		destination.couleur = source.couleur;
 		destination.direction = source.direction;
 		source.setType(type);
 		source.couleur = COLORS.GREEN;
@@ -251,33 +273,33 @@ public class Terrain implements Drawable {
 
 	void genererCube(){
 
-		
+		/*ATTENTION CETTE SECTION CONTIENT DU CODE DE TRUIE*/
 		int direction = Math.abs(generateur.nextInt()%4);
 		int positionArrivee =  Math.abs(generateur.nextInt());
 		int indexY, indexX;
 		switch(direction){
 		case 0 : 
-			indexY = blockCountY/2 + positionArrivee%(blockCountY/2);
+			indexY = (blockCountY/2)+1 + positionArrivee%(blockCountY/2); //<---- CODE DE TRUIE
 			GameGrid[0][indexY].setType(BlockType.GREF);
-			GameGrid[0][indexY].couleur = COLORS.PURPLE;
+			GameGrid[0][indexY].ChooseRandomColorForCurrentBlock();
 			GameGrid[0][indexY].direction =  DIRECTIONS.DROITE;
 			break;
 		case 1 :
 			indexX = positionArrivee%(blockCountX/2);
 			GameGrid[indexX][0].setType(BlockType.GREF);
-			GameGrid[indexX][0].couleur = COLORS.PURPLE;
+			GameGrid[indexX][0].ChooseRandomColorForCurrentBlock();
 			GameGrid[indexX][0].direction =  DIRECTIONS.BAS;
 			break;
 		case 2 :
 			indexY = positionArrivee%(blockCountY/2);
 			GameGrid[blockCountX-1][indexY].setType(BlockType.GREF);
-			GameGrid[blockCountX-1][indexY].couleur = COLORS.PURPLE;
+			GameGrid[blockCountX-1][indexY].ChooseRandomColorForCurrentBlock();
 			GameGrid[blockCountX-1][indexY].direction =  DIRECTIONS.GAUCHE;
 			break;
 		case 3 :
-			indexX = blockCountX/2 + positionArrivee%(blockCountX/2);
+			indexX = blockCountX/2+1 + positionArrivee%(blockCountX/2);//<---- CODE DE TRUIE
 			GameGrid[indexX][blockCountY-1].setType(BlockType.GREF);
-			GameGrid[indexX][blockCountY-1].couleur = COLORS.PURPLE;
+			GameGrid[indexX][blockCountY-1].ChooseRandomColorForCurrentBlock();
 			GameGrid[indexX][blockCountY-1].direction =  DIRECTIONS.HAUT;
 			break;
 		}
