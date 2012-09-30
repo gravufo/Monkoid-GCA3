@@ -50,13 +50,10 @@ public class Terrain implements Drawable {
 
 		platformBlocksIndexList = new ArrayList<Vector3>();
 		Vector3 center = GetGridCenter();
-		racineVector = new Vector3(center.x, center.y);
-		GameGrid[center.x][center.y].setType(BlockType.RACINE);
-		GameGrid[center.x][center.y].couleur = COLORS.AUCUNE;
-		platformBlocksIndexList.add(center);
+		
 		
 		//LASER_H
-		/*for(int i = 0; i< blockCountX;i++)
+		for(int i = 0; i< blockCountX;i++)
 		{
 			GameGrid[i][center.y].setType(BlockType.LASER_H);
 			GameGrid[i][center.y].couleur = COLORS.AUCUNE;
@@ -66,7 +63,12 @@ public class Terrain implements Drawable {
 		{
 			GameGrid[center.x][j].setType(BlockType.LASER_V);
 			GameGrid[center.x][j].couleur = COLORS.AUCUNE;
-		}*/
+		}
+		racineVector = new Vector3(center.x, center.y);
+		GameGrid[center.x][center.y].setType(BlockType.RACINE);
+		GameGrid[center.x][center.y].couleur = COLORS.AUCUNE;
+		platformBlocksIndexList.add(center);
+		
 		generateur = new Random();
 		genererCube();
 	}
@@ -190,7 +192,6 @@ public class Terrain implements Drawable {
 	}
 
 	public boolean blocDepasseLaser(Bloc blocAVerifier){
-
 		int facteur = 1;
 		
 		Vector3 milieu = this.GetGridCenter();
@@ -233,27 +234,8 @@ public class Terrain implements Drawable {
 		for( int i = 0 ; i < blockCountX; i++)
 			for( int j = 0; j < blockCountY; j++ )
 				if(GameGrid[i][j].type == BlockType.GREF){
-					if(blocDepasseLaser(GameGrid[i][j])){
-						if(GameGrid[i][j].direction == DIRECTIONS.GAUCHE && i == milieu.x+1 )
-						{
-							GameGrid[i][j].setType(BlockType.INVISIBLE);
-							GameGrid[i][j].couleur = COLORS.GREEN;
-							GameGrid[i][j].direction= DIRECTIONS.AUCUNE;
-						}
-						else if(GameGrid[i][j].direction == DIRECTIONS.HAUT && j == milieu.y+1){
-							GameGrid[i][j].setType(BlockType.INVISIBLE);
-							GameGrid[i][j].couleur = COLORS.GREEN;
-							GameGrid[i][j].direction= DIRECTIONS.AUCUNE;
-						}
-						else{
-							GameGrid[i][j].couleur = COLORS.AUCUNE;
-						}
-						GameGrid[i][j].updated = true;
-					}
-					
-					
 					if(GameGrid[i][j].direction == DIRECTIONS.DROITE  && !GameGrid[i][j].updated){
-						changerBlocPour(GameGrid[i][j],GameGrid[i+1][j], BlockType.INVISIBLE);
+						changerBlocPour(GameGrid[i][j], GameGrid[i+1][j], BlockType.INVISIBLE);
 					}
 					else if(GameGrid[i][j].direction == DIRECTIONS.GAUCHE  && !GameGrid[i][j].updated){
 						changerBlocPour(GameGrid[i][j],GameGrid[i-1][j], BlockType.INVISIBLE);
@@ -264,21 +246,28 @@ public class Terrain implements Drawable {
 					 if(GameGrid[i][j].direction == DIRECTIONS.BAS  && !GameGrid[i][j].updated){
 						changerBlocPour(GameGrid[i][j],GameGrid[i][j+1], BlockType.INVISIBLE);
 					}
-					GameGrid[i][j].updated = true;
-					
-				}
-					
+					GameGrid[i][j].updated = true;		
+				}		
 	}
 	
 	public void changerBlocPour(Bloc source, Bloc destination, BlockType type){
-		
-		destination.setType(BlockType.GREF);
-		destination.couleur = source.couleur;
-		destination.direction = source.direction;
-		source.setType(type);
-		source.couleur = COLORS.GREEN;
-		source.direction= DIRECTIONS.AUCUNE;
-		destination.updated = true;	
+		if(destination.type == BlockType.PLATEFORME || destination.type == BlockType.RACINE){
+			source.setType(BlockType.PLATEFORME);
+			source.direction= DIRECTIONS.AUCUNE;
+			platformBlocksIndexList.add(new Vector3(source.position.x, source.position.y));
+		}else if(destination.type == BlockType.LASER_H || destination.type == BlockType.LASER_V){
+				source.setType(BlockType.INVISIBLE);
+				source.couleur = COLORS.GREEN;
+				source.direction= DIRECTIONS.AUCUNE;
+		}else{
+			destination.setType(BlockType.GREF);
+			destination.couleur = source.couleur;
+			destination.direction = source.direction;
+			source.setType(type);
+			source.couleur = COLORS.GREEN;
+			source.direction= DIRECTIONS.AUCUNE;
+			destination.updated = true;
+		}
 	}
 
 	void genererCube(){
@@ -323,8 +312,6 @@ public class Terrain implements Drawable {
 
 
 	public void MovePlatform(int deplacemenntIndexX, int deplacemenntIndexY) {
-		//List<Vector3> tempList = new LinkedList<Vector3>();
-		
 		for( Vector3 v : platformBlocksIndexList){
 			Bloc oldBlock = GameGrid[v.x][v.y];
 			
@@ -343,9 +330,13 @@ public class Terrain implements Drawable {
 			if(newBlock.type == BlockType.RACINE){
 				racineVector.x = newBlock.position.x;
 				racineVector.y = newBlock.position.y;
+				if(Math.abs(deplacemenntIndexY) >= 1)
+					oldBlock.setType(BlockType.LASER_V);
+				else
+					oldBlock.setType(BlockType.LASER_H);
+			}else{
+				oldBlock.Destroy();
 			}
-			
-			oldBlock.Destroy();
 		}
 		
 	}

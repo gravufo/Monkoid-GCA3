@@ -115,7 +115,6 @@ public class Bloc implements Drawable {
 		this.type = type;
 		switch(this.type){
 		case INVISIBLE : 
-			
 				this.image = BitmapLibrary.getGreen().BlocInvisible_;
 			break;
 		case RACINE:
@@ -144,16 +143,14 @@ public class Bloc implements Drawable {
 
 	
 	public void Destroy(){
-		
-		this.type = BlockType.INVISIBLE;
-		this.couleur = COLORS.AUCUNE;
+		this.setType(BlockType.INVISIBLE);
+		this.couleur = COLORS.GREEN;
 	}
 	
 	public void AcquirePropertiesFrom(Bloc oldBlock) {
 		this.couleur = oldBlock.couleur;
 		this.direction = oldBlock.direction;
-		this.type = oldBlock.type;
-		this.toggleCheckValue = oldBlock.toggleCheckValue;
-		
+		this.setType(oldBlock.type);
+		this.toggleCheckValue = oldBlock.toggleCheckValue;	
 	}
 }
