@@ -87,8 +87,8 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	}
 		//t.parcourirGrille(t.GetGridCenter(), true, new Vector3(0,0) );
 		this.treeRender.add(t);
-		this.treeRender.add(platform = new Platform(0,0));
-		touchHandler = new TouchHandler(platform);
+		//this.treeRender.add(platform = new Platform(0,0));
+		touchHandler = new TouchHandler(t, 16);
 	}
 	
 	public void surfaceDestroyed(SurfaceHolder holder) {

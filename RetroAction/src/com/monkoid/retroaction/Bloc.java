@@ -11,7 +11,7 @@ import com.monkoid.retroaction.Drawable;
 public class Bloc implements Drawable {
 
 	enum DIRECTIONS { HAUT, BAS, GAUCHE, DROITE, AUCUNE }
-	enum COLORS {RED, YELLOW, BLUE, GREEN, PURPLE}
+	enum COLORS {RED, YELLOW, BLUE, GREEN, PURPLE, AUCUNE}
 
 	public boolean checkValue;
 
@@ -123,6 +123,9 @@ public class Bloc implements Drawable {
 				else
 					this.image = BitmapLibrary.getGreen().Blocred64_;
 				break;
+			case AUCUNE: if( type == BlockType.RACINE )	
+							this.image = BitmapLibrary.getGreen().PlatformBmp_;
+			break;
 			}
 		
 
@@ -147,11 +150,11 @@ public class Bloc implements Drawable {
 			break;
 		case RACINE:
 			if(size == 16)
-				this.image = BitmapLibrary.getGreen().Blocblue16_;
+				this.image = BitmapLibrary.getGreen().PlatformBmp_;
 			else if(size == 32)
-				this.image = BitmapLibrary.getGreen().Blocblue32_;
+				this.image = BitmapLibrary.getGreen().PlatformBmp_;
 			else
-				this.image = BitmapLibrary.getGreen().Blocblue64_;
+				this.image = BitmapLibrary.getGreen().PlatformBmp_;
 			break;
 		case PLATEFORME:
 			if(size == 16)
@@ -166,5 +169,20 @@ public class Bloc implements Drawable {
 
 	public void onUpdate() {
 		// TODO Auto-generated method stub
+	}
+
+	
+	public void Destroy(){
+		
+		this.type = BlockType.INVISIBLE;
+		this.couleur = COLORS.AUCUNE;
+	}
+	
+	public void AcquirePropertiesFrom(Bloc oldBlock) {
+		this.couleur = oldBlock.couleur;
+		this.direction = oldBlock.direction;
+		this.type = oldBlock.type;
+		this.toggleCheckValue = oldBlock.toggleCheckValue;
+		
 	}
 }

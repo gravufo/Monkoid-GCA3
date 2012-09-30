@@ -1,7 +1,9 @@
 package com.monkoid.retroaction;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import android.graphics.Bitmap;
@@ -27,6 +29,7 @@ public class Terrain implements Drawable {
 
 	int blockCountX = 0;
 	int blockCountY = 0;
+	private List<Vector3> platformBlocksIndexList;
 
 	public Terrain(float screen_width, float screen_height, int block_width, int block_height){
 
@@ -43,9 +46,12 @@ public class Terrain implements Drawable {
 				GameGrid[i][j] = new Bloc(i, j, BlockType.PLATEFORME, block_width);
 		}
 
+		platformBlocksIndexList = new ArrayList<Vector3>();
 		Vector3 center = GetGridCenter();
 		GameGrid[center.x][center.y].setType(BlockType.RACINE);
-
+		GameGrid[center.x][center.y].couleur = COLORS.AUCUNE;
+		platformBlocksIndexList.add(center);
+		
 		generateur = new Random();
 		genererCube();
 	}
@@ -289,6 +295,29 @@ public class Terrain implements Drawable {
 		return new Vector3((GameGrid.length) / 2, (GameGrid[0].length) / 2);
 	}
 
+
+	public void MovePlatform(int deplacemenntIndexX, int deplacemenntIndexY) {
+		//List<Vector3> tempList = new LinkedList<Vector3>();
+		
+		for( Vector3 v : platformBlocksIndexList){
+			Bloc oldBlock = GameGrid[v.x][v.y];
+			
+			int newXPos = v.x + deplacemenntIndexX;
+			int newYPos = v.y + deplacemenntIndexY;
+			
+			if( newXPos >= this.blockCountX ||  newYPos >= blockCountY )
+				return;
+			
+			Bloc newBlock = GameGrid[newXPos][newYPos];
+			
+			newBlock.AcquirePropertiesFrom(oldBlock);
+			v.x = newXPos;
+			v.y = newYPos;
+			
+			oldBlock.Destroy();
+		}
+		
+	}
 
 
 
