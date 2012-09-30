@@ -98,9 +98,9 @@ public class Bloc implements Drawable {
 			case RED:
 					this.image = BitmapLibrary.getGreen().Blocred_;
 				break;
-				/*default:
-					this.image = BitmapLibrary.getGreen().Blocred_;
-					break;*/
+			case AUCUNE: if( type == BlockType.RACINE )	
+							this.image = BitmapLibrary.getGreen().PlatformBmp_;
+			break;
 			}
 			if(canvas != null )
 				canvas.drawBitmap(this.image, position.x*size, position.y*size, null);
@@ -119,7 +119,12 @@ public class Bloc implements Drawable {
 				this.image = BitmapLibrary.getGreen().BlocInvisible_;
 			break;
 		case RACINE:
-				this.image = BitmapLibrary.getGreen().Blocblue_;
+			if(size == 16)
+				this.image = BitmapLibrary.getGreen().PlatformBmp_;
+			else if(size == 32)
+				this.image = BitmapLibrary.getGreen().PlatformBmp_;
+			else
+				this.image = BitmapLibrary.getGreen().PlatformBmp_;
 			break;
 		case PLATEFORME:
 				this.image = BitmapLibrary.getGreen().Blocblue_;
@@ -135,5 +140,20 @@ public class Bloc implements Drawable {
 
 	public void onUpdate() {
 		// TODO Auto-generated method stub
+	}
+
+	
+	public void Destroy(){
+		
+		this.type = BlockType.INVISIBLE;
+		this.couleur = COLORS.AUCUNE;
+	}
+	
+	public void AcquirePropertiesFrom(Bloc oldBlock) {
+		this.couleur = oldBlock.couleur;
+		this.direction = oldBlock.direction;
+		this.type = oldBlock.type;
+		this.toggleCheckValue = oldBlock.toggleCheckValue;
+		
 	}
 }

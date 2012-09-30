@@ -39,7 +39,7 @@ public class MainThread extends Thread{
 
 	        	 synchronized(this.surfaceHolder_) 
 	              {
-	        		 if((new_time - lastTimeDraw_) > 15){
+	        		 if((new_time - lastTimeDraw_) > 5){
 
 
 	        			 this.view_.onDraw(c);
