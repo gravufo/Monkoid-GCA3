@@ -150,6 +150,9 @@ public class Bloc implements Drawable {
 	}
 	
 	public void AcquirePropertiesFrom(Bloc oldBlock) {
+		
+		
+		
 		this.couleur = oldBlock.couleur;
 		this.direction = oldBlock.direction;
 		this.type = oldBlock.type;

@@ -323,7 +323,23 @@ public class Terrain implements Drawable {
 
 
 	public void MovePlatform(int deplacemenntIndexX, int deplacemenntIndexY) {
-		//List<Vector3> tempList = new LinkedList<Vector3>();
+		List<Vector3> tempList = new LinkedList<Vector3>();
+		
+//		if( racineVector.x  < 0 ){
+//			if( (racineVector.x + deplacemenntIndexX) >=0 && deplacemenntIndexY !=0 )
+//				deplacemenntIndexX = 0;
+//			else
+//				deplacemenntIndexY = 0;
+//		}
+//		
+//		if( racineVector.x  > 0 ){
+//			if( (racineVector.x + deplacemenntIndexX) <= 0 && deplacemenntIndexY !=0 )
+//				deplacemenntIndexX = 0;
+//			else
+//				deplacemenntIndexY = 0;
+//		}
+		
+		
 		
 		for( Vector3 v : platformBlocksIndexList){
 			Bloc oldBlock = GameGrid[v.x][v.y];
@@ -331,14 +347,17 @@ public class Terrain implements Drawable {
 			int newXPos = v.x + deplacemenntIndexX;
 			int newYPos = v.y + deplacemenntIndexY;
 			
-			if( newXPos >= this.blockCountX ||  newYPos >= blockCountY )
+			if( newXPos >= this.blockCountX ||  newYPos >= blockCountY || newXPos < 0 || newYPos < 0)
 				return;
 			
 			Bloc newBlock = GameGrid[newXPos][newYPos];
 			
 			newBlock.AcquirePropertiesFrom(oldBlock);
-			v.x = newXPos;
-			v.y = newYPos;
+//			v.x = newXPos;
+//			v.y = newYPos;
+			
+			//Vérifications limites
+			tempList.add(new Vector3(newXPos, newYPos));
 			
 			if(newBlock.type == BlockType.RACINE){
 				racineVector.x = newBlock.position.x;
@@ -347,7 +366,11 @@ public class Terrain implements Drawable {
 			}
 			
 			oldBlock.Destroy();
+			
+			
 		}
+		
+		platformBlocksIndexList = new LinkedList<Vector3>( tempList );
 		
 	}
 
