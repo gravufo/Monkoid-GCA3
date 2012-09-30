@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Vector;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.Log;
 import com.monkoid.retroaction.Bloc;
 import com.monkoid.retroaction.Bloc.BlockType;
@@ -17,7 +18,7 @@ import com.monkoid.retroaction.Drawable;
 public class Terrain implements Drawable {
 
 	enum SensAxe {VERTICAL, HORIZONTAL, AUCUN}
-
+	
 	int longueur;
 	int largeur;
 	int tailleAirDeJeu = 400;
@@ -26,7 +27,7 @@ public class Terrain implements Drawable {
 
 	public Random generateur;
 	public Bloc[][] GameGrid;
-
+	public long JekiffCaRace = 0;
 	private Vector3 racineVector;
 
 	int blockCountX = 0;
@@ -364,13 +365,22 @@ public class Terrain implements Drawable {
 		}
 
 		platformBlocksIndexList = new LinkedList<Vector3>(tempList);
-
+		JekiffCaRace = 0;
 		for(Bloc b: platformInTheFutur){
 			GameGrid[b.position.x][b.position.y] = new Bloc(b);
 			if(b.type == BlockType.RACINE)
-			{
 				this.racineVector = new Vector3(b.position.x, b.position.y);
-			}
+			else
+				if(b.couleur == COLORS.BLUE)
+					JekiffCaRace += 10000;
+				else if(b.couleur == COLORS.GREEN)
+					JekiffCaRace += 100000;
+				else if(b.couleur == COLORS.RED)
+					JekiffCaRace += 1000000;
+				else if(b.couleur == COLORS.PURPLE)
+					JekiffCaRace += 10000000;
+				else if(b.couleur == COLORS.YELLOW)
+					JekiffCaRace += 100000000;
 		}
 
 		int centre_y = this.GetGridCenter().y;

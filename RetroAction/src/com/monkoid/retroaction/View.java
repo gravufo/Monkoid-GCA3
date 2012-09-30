@@ -35,7 +35,7 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	@Override
 	protected void onDraw(Canvas canvas) {
 		if(canvas != null){
-			canvas.drawColor(Color.BLACK);
+			canvas.drawColor(Color.GREEN);
 			treeRender.draw(canvas);
 		}
 	}

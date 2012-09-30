@@ -1,14 +1,12 @@
 package com.monkoid.retroaction;
 
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class MainThread extends Thread{
 
 	private SurfaceHolder surfaceHolder_;
 	private View view_;
-	private long lastTimeDraw_ = 0;
 	private long lastTimeCreatBloc_ = 0;
 	private long lastTimeUpdateBlocs_ = 0;
 	public boolean Curly = true;
@@ -33,7 +31,7 @@ public class MainThread extends Thread{
 
 	        	 synchronized(this.surfaceHolder_) 
 	              { 
-	        		 if((new_time - lastTimeCreatBloc_) > 800 && !freeze){
+	        		 if((new_time - lastTimeCreatBloc_) > 200 && !freeze){
         				freeze = true;
 	        			this.view_.t.genererCube();
 	 					lastTimeCreatBloc_ =  new_time;
@@ -45,10 +43,9 @@ public class MainThread extends Thread{
 	        			 }
 	        			 lastTimeUpdateBlocs_ = new_time;
 	        			 freeze = false;
-	        		 }else{//(((new_time - lastTimeDraw_) > 15) && !freeze){
+	        		 }else{
 	        			 freeze = true;
 	        			 this.view_.onDraw(c);
-	        			 lastTimeDraw_ = new_time;
 	        			 freeze = false;
 	        		 }
 	        		 
