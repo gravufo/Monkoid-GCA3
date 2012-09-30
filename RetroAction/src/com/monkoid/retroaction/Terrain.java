@@ -343,6 +343,7 @@ public class Terrain implements Drawable {
 			if(newBlock.type == BlockType.RACINE){
 				racineVector.x = newBlock.position.x;
 				racineVector.y = newBlock.position.y;
+
 			}
 			
 			oldBlock.Destroy();
