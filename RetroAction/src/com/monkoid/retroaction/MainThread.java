@@ -12,6 +12,7 @@ public class MainThread extends Thread{
 	private long lastTimeCreatBloc_ = 0;
 	private long lastTimeUpdateBlocs_ = 0;
 	public boolean Curly = true;
+	public boolean freeze = false;
 	
 	public MainThread(SurfaceHolder surfaceHolder, View view)
 	{
@@ -31,27 +32,24 @@ public class MainThread extends Thread{
 	        	long new_time = System.currentTimeMillis();
 
 	        	 synchronized(this.surfaceHolder_) 
-	              {
-	        		 if((new_time - lastTimeDraw_) > 5){
-
-
+	              { 
+	        		 if((new_time - lastTimeCreatBloc_) > 800 && !freeze){
+        				freeze = true;
+	        			this.view_.t.genererCube();
+	 					lastTimeCreatBloc_ =  new_time;
+	 					freeze = false;
+	        		 }else if((new_time - lastTimeUpdateBlocs_) > 400 && !freeze){
+	        			 if(this.view_.t != null){
+	        				 freeze = true;
+	        				 this.view_.t.onUpdate();
+	        			 }
+	        			 lastTimeUpdateBlocs_ = new_time;
+	        			 freeze = false;
+	        		 }else{//(((new_time - lastTimeDraw_) > 15) && !freeze){
+	        			 freeze = true;
 	        			 this.view_.onDraw(c);
 	        			 lastTimeDraw_ = new_time;
-	        		 }
-
-	        		 if((new_time - lastTimeUpdateBlocs_) >300){
-	        			 if(this.view_.t != null)
-	        				 this.view_.t.onUpdate();
-	        			 lastTimeUpdateBlocs_ = new_time;
-	        			 Log.d("MainThread", "UpdateBlocs");
-	        		 }
-
-	        		 
-	        		 if((new_time - lastTimeCreatBloc_) > 500){
-	        			this.view_.t.genererCube();
-	 					Log.d("MainThread", "BlocGenerator");
-	 					lastTimeCreatBloc_ =  new_time;
-
+	        			 freeze = false;
 	        		 }
 	        		 
 	              }

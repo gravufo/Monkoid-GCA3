@@ -15,6 +15,7 @@ public class Bloc implements Drawable {
 	COLORS couleur;
 	DIRECTIONS direction;
 	Vector3 position;
+	public Vector3 tempPosition;
 	boolean updated;
 	Bitmap image;
 	
@@ -39,17 +40,18 @@ public class Bloc implements Drawable {
 		this.position = new Vector3(i,j);
 		this.direction = DIRECTIONS.BAS;
 		this.toggleCheckValue = false;
-		this.couleur = COLORS.GREEN;
-		//ChooseRandomColorForCurrentBlock();
-
+		this.couleur = COLORS.AUCUNE;
 		this.updated = false;
-		////////TEST///////////
-		//Random generateur = new Random();
-		//this.couleur =  Math.abs(generateur.nextInt()%4);
-
 	}
 
-	public Bloc() {
+	public Bloc(Bloc b) {
+		this.couleur = b.couleur;
+		this.direction = b.direction;
+		this.position = new Vector3(b.position.x, b.position.y);
+		this.updated = b.updated;
+		this.setType(b.type);
+		this.size = b.size;
+		this.toggleCheckValue = b.toggleCheckValue;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -110,6 +112,7 @@ public class Bloc implements Drawable {
 
 	public void setType(BlockType type){
 		this.type = type;
+		
 		switch(this.type){
 		case INVISIBLE : 
 				this.image = BitmapLibrary.getGreen().BlocInvisible_;
@@ -123,7 +126,7 @@ public class Bloc implements Drawable {
 				this.image = BitmapLibrary.getGreen().PlatformBmp_;
 			break;
 		case PLATEFORME:
-				this.image = BitmapLibrary.getGreen().Blocblue_;
+				this.direction = DIRECTIONS.AUCUNE;
 			break;
 		case LASER_H:
 				this.image = BitmapLibrary.getGreen().Bloclaserhorizontale_;
@@ -140,8 +143,10 @@ public class Bloc implements Drawable {
 
 	
 	public void Destroy(){
+		if(this.type == BlockType.LASER_H || this.type == BlockType.LASER_V)
+			return;
 		this.setType(BlockType.INVISIBLE);
-		this.couleur = COLORS.GREEN;
+		this.couleur = COLORS.AUCUNE;
 	}
 	
 	public void AcquirePropertiesFrom(Bloc oldBlock) {

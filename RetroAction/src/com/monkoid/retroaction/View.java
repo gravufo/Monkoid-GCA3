@@ -88,7 +88,6 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	     Intent i = new Intent(activity,MainMenu.class);
 	     TimeCounter c = new TimeCounter(45000,i,activity,this);//45000 milliseconds
 	     //c.activity = activity;
-	     
 		//t.parcourirGrille(t.GetGridCenter(), true, new Vector3(0,0) );
 		this.treeRender.add(t);
 		this.treeRender.add(c);

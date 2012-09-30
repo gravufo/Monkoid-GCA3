@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Vector;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.Log;
 import com.monkoid.retroaction.Bloc;
@@ -15,7 +17,7 @@ import com.monkoid.retroaction.Drawable;
 public class Terrain implements Drawable {
 
 	enum SensAxe {VERTICAL, HORIZONTAL, AUCUN}
-	
+
 	int longueur;
 	int largeur;
 	int tailleAirDeJeu = 400;
@@ -31,8 +33,8 @@ public class Terrain implements Drawable {
 	int blockCountY = 0;
 	private List<Vector3> platformBlocksIndexList;
 
+	private MainThread mainThread_ = null;
 	public Terrain(float screen_width, float screen_height, int block_width, int block_height){
-
 		blockCountX = (int)(screen_width  / block_width);
 		blockCountY = (int)(screen_height / block_height);
 
@@ -165,10 +167,7 @@ public class Terrain implements Drawable {
 				break;
 			}
 			Vector3 nextPos = new Vector3(origin.x + delta.x, origin.y + delta.y);
-
-			//if( !delta.HasVisited(whereFrom) ){
 			parcourirGrille(nextPos, newToggleCheckValue, delta);
-			//}
 			currentBlock.couleur = COLORS.BLUE;
 			state++;
 		}
@@ -214,7 +213,6 @@ public class Terrain implements Drawable {
 	}
 
 	public void onUpdate() {
-
 		for( int i = 0 ; i < blockCountX; i++)
 			for( int j = 0; j < blockCountY; j++ ){
 				GameGrid[i][j].updated = false;
@@ -223,18 +221,17 @@ public class Terrain implements Drawable {
 		for( int i = 0 ; i < blockCountX; i++)
 			for( int j = 0; j < blockCountY; j++ )
 				if(GameGrid[i][j].type == BlockType.GREF){
-
 					if(GameGrid[i][j].direction == DIRECTIONS.DROITE  && !GameGrid[i][j].updated){
-						changerBlocPour(GameGrid[i][j], GameGrid[i+1][j], BlockType.INVISIBLE);
+						changerBlocPour(GameGrid[i][j], GameGrid[i+1][j], BlockType.INVISIBLE, DIRECTIONS.DROITE);
 					}
 					else if(GameGrid[i][j].direction == DIRECTIONS.GAUCHE  && !GameGrid[i][j].updated){
-						changerBlocPour(GameGrid[i][j],GameGrid[i-1][j], BlockType.INVISIBLE);
+						changerBlocPour(GameGrid[i][j],GameGrid[i-1][j], BlockType.INVISIBLE, DIRECTIONS.GAUCHE);
 					}
 					else if(GameGrid[i][j].direction == DIRECTIONS.HAUT  && !GameGrid[i][j].updated){
-						changerBlocPour(GameGrid[i][j],GameGrid[i][j-1], BlockType.INVISIBLE);
+						changerBlocPour(GameGrid[i][j],GameGrid[i][j-1], BlockType.INVISIBLE, DIRECTIONS.HAUT);
 					}
 					if(GameGrid[i][j].direction == DIRECTIONS.BAS  && !GameGrid[i][j].updated){
-						changerBlocPour(GameGrid[i][j],GameGrid[i][j+1], BlockType.INVISIBLE);
+						changerBlocPour(GameGrid[i][j],GameGrid[i][j+1], BlockType.INVISIBLE, DIRECTIONS.BAS);
 					}
 
 					GameGrid[i][j].updated = true;		
@@ -242,30 +239,30 @@ public class Terrain implements Drawable {
 
 	}
 
-	public void changerBlocPour(Bloc source, Bloc destination, BlockType type){
-
+	public void changerBlocPour(Bloc source, Bloc destination, BlockType type, DIRECTIONS direction){
 		if(destination.type == BlockType.PLATEFORME || destination.type == BlockType.RACINE){
 			source.setType(BlockType.PLATEFORME);
 			source.direction= DIRECTIONS.AUCUNE;
 			platformBlocksIndexList.add(new Vector3(source.position.x, source.position.y));
-		}else if(destination.type == BlockType.LASER_H || destination.type == BlockType.LASER_V){
-			source.setType(BlockType.INVISIBLE);
-			source.couleur = COLORS.GREEN;
-			source.direction= DIRECTIONS.AUCUNE;
-		}else{
-			destination.setType(BlockType.GREF);
-			destination.couleur = source.couleur;
-			destination.direction = source.direction;
-			source.setType(type);
-			source.couleur = COLORS.GREEN;
-			source.direction= DIRECTIONS.AUCUNE;
-			destination.updated = true;
-		}
+		}else 
+
+			if(destination.type == BlockType.LASER_H || destination.type == BlockType.LASER_V){
+				source.setType(BlockType.INVISIBLE);
+				source.couleur = COLORS.AUCUNE;
+				source.direction= DIRECTIONS.AUCUNE;
+			}else{
+				destination.setType(BlockType.GREF);
+				destination.couleur = source.couleur;
+				destination.direction = source.direction;
+				source.setType(type);
+				source.couleur = COLORS.AUCUNE;
+				source.direction= DIRECTIONS.AUCUNE;
+				destination.updated = true;
+			}
 
 	}
 
 	void genererCube(){
-
 		/*ATTENTION CETTE SECTION CONTIENT DU CODE DE TRUIE*/
 		int direction = Math.abs(generateur.nextInt()%4);
 		int positionArrivee =  Math.abs(generateur.nextInt());
@@ -305,118 +302,86 @@ public class Terrain implements Drawable {
 	}
 
 
+	public Vector3 FindRoot(){
+		for( Vector3 v : platformBlocksIndexList){
+			if(GameGrid[v.x][v.y].type == BlockType.RACINE )
+				return v;
+		}
+		return null;
+	}
+
+	public Vector3 GetPlatformHeading(int deplacemenntIndexX, int deplacemenntIndexY){
+		Vector3 v = racineVector;
+		int deltaX = 0;
+		int deltaY = 0;
+
+		if( v.x != this.GetGridCenter().x ){
+			if(deplacemenntIndexX == 0)
+				return null;
+			deltaX = deplacemenntIndexX;
+		} else{
+			if( v.y != this.GetGridCenter().y ){
+				if(deplacemenntIndexY == 0)
+					return null;
+				deltaY = deplacemenntIndexY;
+			}else{
+				if( Math.abs(deplacemenntIndexX) > Math.abs(deplacemenntIndexY) )
+				{
+					deltaX = deplacemenntIndexX;
+				} else if(Math.abs(deplacemenntIndexX) < Math.abs( deplacemenntIndexY) ){
+					deltaY = deplacemenntIndexY;
+				} else{
+				}
+
+			}
+		}
+		return new Vector3(deltaX, deltaY);
+	}
+
 	public void MovePlatform(int deplacemenntIndexX, int deplacemenntIndexY) {
 		List<Vector3> tempList = new LinkedList<Vector3>();
+		List<Bloc> platformInTheFutur = new LinkedList<Bloc>(); 
+
+		Vector3 platformHeading = GetPlatformHeading(deplacemenntIndexX, deplacemenntIndexY);
+
+		if(platformHeading == null)
+			return;
 
 		for( Vector3 v : platformBlocksIndexList){
 			Bloc oldBlock = GameGrid[v.x][v.y];
 
-			
-			SensAxe sens;
-			
-			int newXPos;
-			int newYPos;
-
-			if( v.x != this.GetGridCenter().x ){
-				if(deplacemenntIndexX == 0)
-					return;
-				newXPos = v.x + deplacemenntIndexX;
-				newYPos = this.GetGridCenter().y;
-				sens= SensAxe.HORIZONTAL;
-			} else{
-				if( v.y != this.GetGridCenter().y ){
-					if(deplacemenntIndexY == 0)
-						return;
-					newYPos = v.y + deplacemenntIndexY;
-					newXPos = this.GetGridCenter().x;
-					sens = SensAxe.VERTICAL;
-				}else{
-					if( Math.abs(deplacemenntIndexX) > Math.abs(deplacemenntIndexY) )
-					{
-						newXPos = v.x + deplacemenntIndexX;
-						newYPos = this.GetGridCenter().y;	
-						sens = SensAxe.HORIZONTAL;
-					} else if(Math.abs(deplacemenntIndexX) < Math.abs( deplacemenntIndexY) ){
-						newYPos = v.y + deplacemenntIndexY;
-						newXPos = this.GetGridCenter().x;	
-						sens = SensAxe.VERTICAL;
-					} else{
-						newXPos = this.GetGridCenter().x;
-						newYPos = this.GetGridCenter().y;
-						sens = SensAxe.AUCUN;
-					}
-
-				}
-			}
-
-			//			int newXPos = v.x + deplacemenntIndexX;
-			//			int newYPos = v.y + deplacemenntIndexY;
-			//
-			//			if( newXPos != this.GetGridCenter().x )
-			//			{
-			//				newYPos = v.y;
-			//			}else{
-			//				if(newYPos)
-			//					
-			//					
-			//				if( deplacemenntIndexY > deplacemenntIndexX )
-			//					newXPos = v.x;
-			//				else if( deplacemenntIndexY > deplacemenntIndexX )
-			//				newXPos = v.x;
-			//			}
-
-			//			int newXPos;
-			//			int newYPos;
-			//			
-			//			if(v.x * (v.x + deplacemenntIndexX) < 0  && deplacemenntIndexY != 0 ){
-			//				newXPos = this.GetGridCenter().x; 
-			//				newYPos = v.y + deplacemenntIndexY;
-			//			}
-			//			else{
-			//				newXPos = v.x + deplacemenntIndexX;
-			//				newYPos = v.y;
-			//			}
-			//		
-			//			if(v.y * (v.y + deplacemenntIndexY) < 0  && deplacemenntIndexX != 0 ){
-			//				newYPos = this.GetGridCenter().y; 
-			//				newXPos = v.x + deplacemenntIndexX;
-			//			}
-			//			else{
-			//				newYPos = v.y + deplacemenntIndexY;
-			//				newXPos = v.x;
-			//			}
+			int newXPos = v.x + platformHeading.x;
+			int newYPos = v.y + platformHeading.y;
 
 			if( newXPos >= this.blockCountX ||  newYPos >= blockCountY || newXPos < 0 || newYPos < 0)
 				return;
-
-			Bloc newBlock = GameGrid[newXPos][newYPos];
-
-			newBlock.AcquirePropertiesFrom(oldBlock);
-
-			//			v.x = newXPos;
-			//			v.y = newYPos;
-
-
-			// Vérifications limites
+			
 			tempList.add(new Vector3(newXPos, newYPos));
-
-			if(newBlock.type == BlockType.RACINE){
-				racineVector.x = newBlock.position.x;
-				racineVector.y = newBlock.position.y;
-				
-				if( sens == SensAxe.VERTICAL )
-					oldBlock.setType(BlockType.LASER_V);
-				else if( sens == SensAxe.HORIZONTAL )
-					oldBlock.setType(BlockType.LASER_H);
-			}else{
-				oldBlock.Destroy();
-			}
-
-
-
+			Bloc temp = new Bloc(oldBlock);
+			temp.position = new Vector3(newXPos, newYPos);
+			platformInTheFutur.add(temp);
+			oldBlock.Destroy();
 		}
 
-		platformBlocksIndexList = new LinkedList<Vector3>( tempList );
+		platformBlocksIndexList = new LinkedList<Vector3>(tempList);
+
+		for(Bloc b: platformInTheFutur){
+			GameGrid[b.position.x][b.position.y] = new Bloc(b);
+			if(b.type == BlockType.RACINE)
+			{
+				this.racineVector = new Vector3(b.position.x, b.position.y);
+			}
+		}
+
+		int centre_y = this.GetGridCenter().y;
+
+		for(int i=0; i<GameGrid.length; i++)
+			if(GameGrid[i][centre_y].type != BlockType.RACINE && GameGrid[i][centre_y].type != BlockType.PLATEFORME )
+				GameGrid[i][centre_y].setType(BlockType.LASER_H);
+
+		for(int i=0; i<GameGrid[0].length; i++)
+			if(GameGrid[this.GetGridCenter().x][i].type != BlockType.RACINE && GameGrid[this.GetGridCenter().x][i].type != BlockType.PLATEFORME)
+				GameGrid[this.GetGridCenter().x][i].setType(BlockType.LASER_V);
 
 	}
 
