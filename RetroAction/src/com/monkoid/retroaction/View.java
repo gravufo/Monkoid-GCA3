@@ -61,34 +61,40 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-		BitmapLibrary.getGreen().init(this.getContext());
+		
 		this.treeRender = new TreeRender();
+
 		this.screenWidth_ = this.getWidth();
 		this.screenHeight_ = this.getHeight();
 		this.screenDensity_ = this.getContext().getResources().getDisplayMetrics().densityDpi;
+		
+		BitmapLibrary.getGreen().init(this.getContext(),getSizeofblocks(this.getContext().getResources().getDisplayMetrics().densityDpi) );
 		this.initTreeRender();
 		this.mainThread_.start();
 	}
 	
-	private void initTreeRender(){
-		switch(this.screenDensity_){
+	private int getSizeofblocks(int density){
+		switch(density){
 	     case DisplayMetrics.DENSITY_LOW:
-	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 16, 16);
-	     break;
+	    	 return 16;
 	     case DisplayMetrics.DENSITY_MEDIUM:
 	     case DisplayMetrics.DENSITY_HIGH:
-
-	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 16, 16);
-	      break;
-	     default:
-	    	 t = new Terrain(this.screenWidth_, this.screenHeight_, 32, 32);
-	      break;
+	    	return 16;
+	      default:
+	    	 return 32;
 	      
+		}
 	}
+	
+	private void initTreeRender(){
+		int size = getSizeofblocks(this.screenDensity_);
+	     t = new Terrain(this.screenWidth_, this.screenHeight_, size, size);
+	
+	      
 		//t.parcourirGrille(t.GetGridCenter(), true, new Vector3(0,0) );
 		this.treeRender.add(t);
-		this.treeRender.add(platform = new Platform(0,0));
-		touchHandler = new TouchHandler(platform);
+		//this.treeRender.add(platform = new Platform(0,0));
+		touchHandler = new TouchHandler(t, 16);
 	}
 	
 	public void surfaceDestroyed(SurfaceHolder holder) {

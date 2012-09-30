@@ -10,6 +10,7 @@ public class TreeRender {
 	
 	public Vector<Drawable> drawables = new Vector<Drawable>();
 	private Context context_ = null;
+	public int size = 0;
 	
 	public TreeRender(){
 	}

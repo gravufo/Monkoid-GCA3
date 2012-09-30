@@ -45,7 +45,7 @@ public class Platform implements Drawable
 
 	public void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
-		canvas.drawBitmap(bmp_, this.x + 150, this.y + 250, null);
+		//canvas.drawBitmap(bmp_, this.x + 150, this.y + 250, null);
 	}
 
 	public void initBmp(Bitmap bmp) {
