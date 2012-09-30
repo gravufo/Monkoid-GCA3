@@ -46,7 +46,7 @@ public class MainThread extends Thread{
 	        			 lastTimeDraw_ = new_time;
 	        		 }
 
-	        		 if((new_time - lastTimeUpdateBlocs_) >500){
+	        		 if((new_time - lastTimeUpdateBlocs_) >300){
 	        			 if(this.view_.t != null)
 	        				 this.view_.t.onUpdate();
 	        			 lastTimeUpdateBlocs_ = new_time;

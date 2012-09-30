@@ -25,7 +25,7 @@ public class Bloc implements Drawable {
 
 	public boolean toggleCheckValue = false;
 
-	enum BlockType { INVISIBLE, PLATEFORME, GREF, RACINE}
+	enum BlockType { INVISIBLE, PLATEFORME, GREF, RACINE, LASER_H, LASER_V}
 	public BlockType type;
 
 	public Bloc(COLORS couleur, DIRECTIONS direction, Vector3 position) {
@@ -65,7 +65,7 @@ public class Bloc implements Drawable {
 			this.couleur = COLORS.GREEN;
 			break;
 		case 1 :
-			this.couleur = COLORS.GREEN;
+			this.couleur = COLORS.BLUE;
 			break;
 		case 2 :
 			this.couleur = COLORS.PURPLE;;
@@ -84,53 +84,27 @@ public class Bloc implements Drawable {
 	public void onDraw(Canvas canvas){
 			switch(couleur){
 			case BLUE : 
-				if(size == 16)
-					this.image = BitmapLibrary.getGreen().Blocblue16_;
-				else if(size == 32)
-					this.image = BitmapLibrary.getGreen().Blocblue32_;
-				else
-					this.image = BitmapLibrary.getGreen().Blocblue64_;
+					this.image = BitmapLibrary.getGreen().Blocblue_;
 				break;
 			case GREEN :
-				if(size == 16)
-					this.image = BitmapLibrary.getGreen().Blocgreen16_;
-				else if(size == 32)
-					this.image = BitmapLibrary.getGreen().Blocgreen32_;
-				else
-					this.image = BitmapLibrary.getGreen().Blocgreen64_;
+					this.image = BitmapLibrary.getGreen().Blocgreen_;
 				break;
 			case PURPLE:
-				if(size == 16)
-					this.image = BitmapLibrary.getGreen().Blocpurple16_;
-				else if(size == 32)
-					this.image = BitmapLibrary.getGreen().Blocpurple32_;
-				else
-					this.image = BitmapLibrary.getGreen().Blocpurple64_;
+					this.image = BitmapLibrary.getGreen().Blocpurple_;
 				break;
 			case YELLOW:
-				if(size == 16)
-					this.image = BitmapLibrary.getGreen().Blocyellow16_;
-				else if(size == 32)
-					this.image = BitmapLibrary.getGreen().Blocyellow32_;
-				else
-					this.image = BitmapLibrary.getGreen().Blocyellow64_;
+					this.image = BitmapLibrary.getGreen().Blocyellow_;
 				break;
 			case RED:
-				if(size == 16)
-					this.image = BitmapLibrary.getGreen().Blocred16_;
-				else if(size == 32)
-					this.image = BitmapLibrary.getGreen().Blocred32_;
-				else
-					this.image = BitmapLibrary.getGreen().Blocred64_;
+					this.image = BitmapLibrary.getGreen().Blocred_;
 				break;
 			case AUCUNE: if( type == BlockType.RACINE )	
 							this.image = BitmapLibrary.getGreen().PlatformBmp_;
 			break;
 			}
-		
+			if(canvas != null )
+				canvas.drawBitmap(this.image, position.x*size, position.y*size, null);
 
-		if(canvas != null)
-			canvas.drawBitmap(this.image, position.x*this.size, position.y*this.size, null);
 	}
 
 	public void initBmp(Bitmap bmp) {
@@ -141,12 +115,8 @@ public class Bloc implements Drawable {
 		this.type = type;
 		switch(this.type){
 		case INVISIBLE : 
-			if(size == 16)
-				this.image = BitmapLibrary.getGreen().BlocInvisible16_;
-			else if(size == 32)
-				this.image = BitmapLibrary.getGreen().BlocInvisible32_;
-			else
-				this.image = BitmapLibrary.getGreen().BlocInvisible64_;
+			
+				this.image = BitmapLibrary.getGreen().BlocInvisible_;
 			break;
 		case RACINE:
 			if(size == 16)
@@ -157,12 +127,13 @@ public class Bloc implements Drawable {
 				this.image = BitmapLibrary.getGreen().PlatformBmp_;
 			break;
 		case PLATEFORME:
-			if(size == 16)
-				this.image = BitmapLibrary.getGreen().Blocblue16_;
-			else if(size == 32)
-				this.image = BitmapLibrary.getGreen().Blocblue32_;
-			else
-				this.image = BitmapLibrary.getGreen().Blocblue64_;
+				this.image = BitmapLibrary.getGreen().Blocblue_;
+			break;
+		case LASER_H:
+				this.image = BitmapLibrary.getGreen().Bloclaserhorizontale_;
+			break;
+		case LASER_V:
+				this.image = BitmapLibrary.getGreen().Bloclaservertical_;
 			break;
 		}
 	}
