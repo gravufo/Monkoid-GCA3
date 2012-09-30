@@ -76,12 +76,12 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	private int getSizeofblocks(int density){
 		switch(density){
 	     case DisplayMetrics.DENSITY_LOW:
-	    	 return 64;
+	    	 return 16;
 	     case DisplayMetrics.DENSITY_MEDIUM:
 	     case DisplayMetrics.DENSITY_HIGH:
-	    	return 32;
+	    	return 20;
 	      default:
-	    	 return 30;
+	    	 return 32;
 	      
 		}
 	}
