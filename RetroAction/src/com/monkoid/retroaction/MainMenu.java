@@ -12,34 +12,57 @@ import android.widget.Button;
 
 public class MainMenu extends Activity implements OnClickListener {
 
-	private View view_;
 	private Button newGame_;
-	 private  Button exit_;
-	
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.main_menu);
-        newGame_ = (Button)findViewById(R.id.bNew);
-        exit_ = (Button)findViewById(R.id.bExit);
-        newGame_.setOnClickListener(this);
-        exit_.setOnClickListener(this);
+	private Button exit_;
+	private CidHandler cid;
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		setContentView(R.layout.main_menu);
+		newGame_ = (Button) findViewById(R.id.bNew);
+		exit_ = (Button) findViewById(R.id.bExit);
+		newGame_.setOnClickListener(this);
+		exit_.setOnClickListener(this);
+		cid = CidHandler.getCidLife().initIntro(this);
+	}
+
+	@Override
+    protected void onDestroy()
+    {
+		cid.introToggle(false);
+    	super.onDestroy();
+    }
+	
+	@Override
+    protected void onPause()
+    {
+		cid.introToggle(false);
+    	super.onPause();
     }
     
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
+	@Override
+    protected void onResume()
+    {
+		super.onResume();
+		cid.gameToggle(false);
+		cid.introToggle(true);
     }
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
-        return true;
-    }
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
 
 	public void onClick(android.view.View arg0) {
 		   switch(arg0.getId()) {
@@ -52,6 +75,5 @@ public class MainMenu extends Activity implements OnClickListener {
 	        	break;
 	        
 	    }
-		
 	}
 }

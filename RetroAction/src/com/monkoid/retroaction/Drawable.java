@@ -1,6 +1,5 @@
 package com.monkoid.retroaction;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 public interface Drawable {

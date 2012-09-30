@@ -1,7 +1,5 @@
 package com.monkoid.retroaction;
 
-import java.util.List;
-
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -16,11 +14,7 @@ public class TouchHandler
 			finalX = 0,
 			finalY = 0,
 			deltaX = 0,
-			deltaY = 0,
-			deltaBlockX = 0,
-			deltaBlockY = 0;
-	private boolean axisY = false,
-			axisX = true;
+			deltaY = 0;
 	private Terrain t;
 	//private List<Vector3> initialPlatformBlockPos;
 	private int pixelSize;
@@ -62,8 +56,6 @@ public class TouchHandler
 			int deplacemenntIndexX = (int) (deltaX / pixelSize);
 			int deplacemenntIndexY = (int) (deltaY / pixelSize);
 
-			
-			
 			if( deplacemenntIndexX != 0 || deplacemenntIndexY != 0 ){
 				t.MovePlatform(deplacemenntIndexX, deplacemenntIndexY);
 				initialX =  event.getX();
