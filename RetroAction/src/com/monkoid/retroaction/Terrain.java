@@ -50,8 +50,7 @@ public class Terrain implements Drawable {
 
 		platformBlocksIndexList = new ArrayList<Vector3>();
 		Vector3 center = GetGridCenter();
-		racineVector.x = center.x;
-		racineVector.y = center.y;
+		racineVector = new Vector3(center.x, center.y);
 		GameGrid[center.x][center.y].setType(BlockType.RACINE);
 		GameGrid[center.x][center.y].couleur = COLORS.AUCUNE;
 		platformBlocksIndexList.add(center);
@@ -342,8 +341,8 @@ public class Terrain implements Drawable {
 			v.y = newYPos;
 			
 			if(newBlock.type == BlockType.RACINE){
-				racineVector.x = newBlock.x
-				racineVector.y = newBlock.y
+				racineVector.x = newBlock.position.x;
+				racineVector.y = newBlock.position.y;
 			}
 			
 			oldBlock.Destroy();
