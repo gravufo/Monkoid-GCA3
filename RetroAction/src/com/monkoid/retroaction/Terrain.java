@@ -24,10 +24,10 @@ public class Terrain implements Drawable {
 	int tailleAirDeJeu = 400;
 	public LinkedList<Bloc> list_blocs_libres;
 	public LinkedList<Bloc> list_blocs_attaches;
-
+	public List<Bloc> platformInTheFutur = null;
 	public Random generateur;
 	public Bloc[][] GameGrid;
-	public long JekiffCaRace = 0;
+	public Integer JekiffCaRace = 0;
 	private Vector3 racineVector;
 
 	int blockCountX = 0;
@@ -339,9 +339,27 @@ public class Terrain implements Drawable {
 		return new Vector3(deltaX, deltaY);
 	}
 
+	public Integer UpdateCaRace(){
+		for(Bloc b: platformInTheFutur){
+			GameGrid[b.position.x][b.position.y] = new Bloc(b);
+			if(b.type != BlockType.RACINE)
+				if(b.couleur == COLORS.BLUE)
+					JekiffCaRace += 10000;
+				else if(b.couleur == COLORS.GREEN)
+					JekiffCaRace += 100000;
+				else if(b.couleur == COLORS.RED)
+					JekiffCaRace += 1000000;
+				else if(b.couleur == COLORS.PURPLE)
+					JekiffCaRace += 10000000;
+				else if(b.couleur == COLORS.YELLOW)
+					JekiffCaRace += 100000000;
+		}
+		return JekiffCaRace;
+	}
+	
 	public void MovePlatform(int deplacemenntIndexX, int deplacemenntIndexY) {
 		List<Vector3> tempList = new LinkedList<Vector3>();
-		List<Bloc> platformInTheFutur = new LinkedList<Bloc>(); 
+		platformInTheFutur = new LinkedList<Bloc>(); 
 
 		Vector3 platformHeading = GetPlatformHeading(deplacemenntIndexX, deplacemenntIndexY);
 
@@ -370,17 +388,6 @@ public class Terrain implements Drawable {
 			GameGrid[b.position.x][b.position.y] = new Bloc(b);
 			if(b.type == BlockType.RACINE)
 				this.racineVector = new Vector3(b.position.x, b.position.y);
-			else
-				if(b.couleur == COLORS.BLUE)
-					JekiffCaRace += 10000;
-				else if(b.couleur == COLORS.GREEN)
-					JekiffCaRace += 100000;
-				else if(b.couleur == COLORS.RED)
-					JekiffCaRace += 1000000;
-				else if(b.couleur == COLORS.PURPLE)
-					JekiffCaRace += 10000000;
-				else if(b.couleur == COLORS.YELLOW)
-					JekiffCaRace += 100000000;
 		}
 
 		int centre_y = this.GetGridCenter().y;
