@@ -1,15 +1,11 @@
 package com.monkoid.retroaction;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.Log;
-
 import com.monkoid.retroaction.Bloc;
 import com.monkoid.retroaction.Bloc.BlockType;
 import com.monkoid.retroaction.Bloc.COLORS;
@@ -193,7 +189,6 @@ public class Terrain implements Drawable {
 	}
 
 	public boolean blocDepasseLaser(Bloc blocAVerifier){
-		int facteur = 1;
 
 		Vector3 milieu = this.GetGridCenter();
 		if( blocAVerifier.direction == DIRECTIONS.DROITE && blocAVerifier.position.x >= milieu.x)
@@ -208,10 +203,6 @@ public class Terrain implements Drawable {
 		return false;
 	}
 
-	private void actualiserPositionBlocs(){	
-
-	}
-
 	public Bloc getBloc(int i, int j){
 		return GameGrid[i][j];	
 	}
@@ -224,13 +215,10 @@ public class Terrain implements Drawable {
 
 	public void onUpdate() {
 
-		// TODO Auto-generated method stub
-
 		for( int i = 0 ; i < blockCountX; i++)
 			for( int j = 0; j < blockCountY; j++ ){
 				GameGrid[i][j].updated = false;
 			}
-		Vector3 milieu = GetGridCenter();
 
 		for( int i = 0 ; i < blockCountX; i++)
 			for( int j = 0; j < blockCountY; j++ )
@@ -409,7 +397,7 @@ public class Terrain implements Drawable {
 			//			v.y = newYPos;
 
 
-			//Vérifications limites
+			// Vérifications limites
 			tempList.add(new Vector3(newXPos, newYPos));
 
 			if(newBlock.type == BlockType.RACINE){

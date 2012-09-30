@@ -1,9 +1,5 @@
 package com.monkoid.retroaction;
 
-import java.util.Random;
-
-import com.monkoid.retroaction.Bloc.BlockType;
-
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -16,13 +12,11 @@ public class MainThread extends Thread{
 	private long lastTimeCreatBloc_ = 0;
 	private long lastTimeUpdateBlocs_ = 0;
 	public boolean Curly = true;
-	private Random randomizer = null;
 	
 	public MainThread(SurfaceHolder surfaceHolder, View view)
 	{
 		this.surfaceHolder_ = surfaceHolder;
 		this.view_ = view;
-		this.randomizer = new Random();
 	}
 	
 	@Override
@@ -30,7 +24,6 @@ public class MainThread extends Thread{
         Canvas c;
         c = null;
         ////Test
-        boolean update = false;
         while(Curly){
 	        try 
 	        {
@@ -75,6 +68,4 @@ public class MainThread extends Thread{
 	        }
         }
     }
-	
-
 }

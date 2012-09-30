@@ -20,10 +20,6 @@ public class BitmapLibrary {
 	public Bitmap Bloclaserhorizontale_;
 	public Bitmap PlatformBmp_;
 
-	private Context context_;
-	
-	
-	
 	public static BitmapLibrary getGreen(){
 		if(green_ == null)
 			green_ = new BitmapLibrary();
