@@ -49,7 +49,6 @@ public class MainMenu extends Activity implements OnClickListener {
 	        case R.id.bNew:
 	        	Intent game = new Intent(MainMenu.this,MainActivity.class);
 	        	startActivity(game);
-
 	        	break;
 	        
 	    }

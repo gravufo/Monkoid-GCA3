@@ -2,6 +2,7 @@ package com.monkoid.retroaction;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,7 +17,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class View extends SurfaceView implements SurfaceHolder.Callback{
-	private MainThread mainThread_;
+	public MainThread mainThread_;
 	private float screenWidth_ = 0;		
 	private float screenHeight_ = 0;		
 	private int screenDensity_ = 0;
@@ -25,9 +26,11 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	private Paint textPaint;
 	public TreeRender treeRender;
 	public Terrain t = null;
+	public Activity activity;
 	
 	public View(Context context,Activity _act, Resources _res) {
 		super(context);
+		activity =_act;
 		// TODO Auto-generated constructor stub
 		// adding the callback (this) to the surface holder to intercept events
 	      getHolder().addCallback(this);
@@ -89,10 +92,13 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 	private void initTreeRender(){
 		int size = getSizeofblocks(this.screenDensity_);
 	     t = new Terrain(this.screenWidth_, this.screenHeight_, size, size);
-	
-	      
+	     Intent i = new Intent(activity,MainMenu.class);
+	     TimeCounter c = new TimeCounter(2000,i,activity,this);//45000 milliseconds
+	     //c.activity = activity;
+	     
 		//t.parcourirGrille(t.GetGridCenter(), true, new Vector3(0,0) );
 		this.treeRender.add(t);
+		this.treeRender.add(c);
 		//this.treeRender.add(platform = new Platform(0,0));
 		touchHandler = new TouchHandler(t, 16);
 	}

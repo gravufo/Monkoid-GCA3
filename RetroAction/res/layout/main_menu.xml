@@ -4,14 +4,23 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center_vertical">
-    <Button android:id="@+id/bNew"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/btn_newgame" />
-    <Button android:id="@+id/bExit"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/btn_exit" />
+
+    <Button
+        android:id="@+id/bNew"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:text="@string/btn_newgame" 
+        android:textSize="30dp">
+    </Button>
+    <Button
+        android:id="@+id/bExit"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:text="@string/btn_exit"
+        android:textSize="30dp" >
+	</Button>
 </LinearLayout>

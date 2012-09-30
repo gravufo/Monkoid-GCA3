@@ -15,7 +15,7 @@ public class MainThread extends Thread{
 	private long lastTimeDraw_ = 0;
 	private long lastTimeCreatBloc_ = 0;
 	private long lastTimeUpdateBlocs_ = 0;
-	private boolean Curly = true;
+	public boolean Curly = true;
 	private Random randomizer = null;
 	
 	public MainThread(SurfaceHolder surfaceHolder, View view)
