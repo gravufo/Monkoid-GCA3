@@ -57,7 +57,7 @@ public class TimeCounter implements Drawable {
 			p.setStyle(Paint.Style.FILL);
 			p.setAntiAlias(true);
 			p.setTextSize(size);
-			canvas.drawText(temps.toString(), 100,100, p);
+			canvas.drawText(temps.toString(), 150,150, p);
 		}
 
 	}

@@ -93,7 +93,7 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 		int size = getSizeofblocks(this.screenDensity_);
 	     t = new Terrain(this.screenWidth_, this.screenHeight_, size, size);
 	     Intent i = new Intent(activity,MainMenu.class);
-	     TimeCounter c = new TimeCounter(2000,i,activity,this);//45000 milliseconds
+	     TimeCounter c = new TimeCounter(45000,i,activity,this);//45000 milliseconds
 	     //c.activity = activity;
 	     
 		//t.parcourirGrille(t.GetGridCenter(), true, new Vector3(0,0) );
